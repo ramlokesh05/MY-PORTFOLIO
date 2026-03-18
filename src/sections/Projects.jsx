@@ -23,7 +23,7 @@ const projects = [
   {
     id: '002',
     image: 'expense-tracker.jpg',
-    title: 'PErsonal expense tracker',
+    title: 'Personal expense tracker',
     subtitle: 'Smart Daily Finance Monitor',
     description: 'A personal finance web app for tracking daily income and expenses, categorizing transactions, and analyzing spending behavior. Designed to help users monitor budgets and build healthy financial habits.',
     tags: ['React', 'JavaScript', 'Chart.js', 'CSS', 'Local Storage'],
