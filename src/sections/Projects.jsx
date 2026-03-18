@@ -6,48 +6,51 @@ import ProjectModal from '../components/ProjectModal'
 const projects = [
   {
     id: '001',
-    title: 'University Management System',
-    subtitle: 'Comprehensive Academic Portal',
-    description: 'A full-stack university management system featuring a secure backend and distinct role-based login portals for students, faculty, and administrators. Manages admissions, courses, grades, and institutional resources.',
-    tags: ['React', 'Node.js', 'MongoDB', 'Express', 'RBAC'],
+    image: 'student-management.jpg',
+    title: 'Student Management System',
+    subtitle: 'Role-Based Academic Administration Platform',
+    description: 'A full-stack student management platform with role-based login for students, teachers, and admins. Built with a secure backend and database integration to manage profiles, attendance, marks, and academic workflows efficiently.',
+    tags: ['React', 'Node.js', 'Express', 'MongoDB', 'RBAC'],
     features: [
-      'Role-Based Access Control (RBAC) securely segregating dashboards',
-      'Encrypted authentication and session management',
-      'Dynamic real-time grade and attendance tracking',
-      'Administrative controls for course and faculty allocation',
+      'Role-based authentication and protected dashboards',
+      'Backend APIs for student, class, and marks management',
+      'Database-driven attendance and academic record tracking',
+      'Admin controls for user and course operations',
     ],
     github: 'https://github.com',
     live: null,
   },
   {
     id: '002',
-    title: 'AI Deadlock Detector',
-    subtitle: 'Intelligent Process Thread Analyzer',
-    description: 'An advanced operating system utility that leverages AI to monitor process execution threads and intelligently detect, predict, and resolve multi-threaded resource deadlocks before system impact.',
-    tags: ['Python', 'Machine Learning', 'OS Threads', 'Algorithm'],
+    image: 'expense-tracker.jpg',
+    title: 'Personal Expense Tracker',
+    subtitle: 'Smart Daily Finance Monitor',
+    description: 'A personal finance web app for tracking daily income and expenses, categorizing transactions, and analyzing spending behavior. Designed to help users monitor budgets and build healthy financial habits.',
+    tags: ['React', 'JavaScript', 'Chart.js', 'CSS', 'Local Storage'],
     features: [
-      'Real-time resource allocation graph monitoring',
-      'Heuristic AI models predicting deadlock probabilities',
-      'Automated thread preemption and safe termination',
-      'Detailed chronological logging of thread acquisitions',
+      'Quick add, edit, and delete for expense entries',
+      'Category-wise and monthly spending analytics',
+      'Visual dashboards with charts and summaries',
+      'Persistent storage for transaction history',
     ],
     github: 'https://github.com',
     live: null,
   },
   {
     id: '003',
-    title: 'Personal Expense Tracker',
-    subtitle: 'Financial Analytics Dashboard',
-    description: 'A sleek, user-friendly financial application that allows individuals to log daily expenses, categorize transactions, and visualize their spending habits over time through interactive charts and dynamic reports.',
-    tags: ['JavaScript', 'React', 'Chart.js', 'CSS', 'Local Storage'],
+    image: 'car-rental.jpg',
+    title: 'Client Car Rental Platform',
+    subtitle: 'Customer-Focused Vehicle Booking System',
+    description: 'A client project for a car rental business featuring vehicle listings, booking workflow, availability management, and customer-friendly UI. Built to streamline rental operations and improve online reservations.',
+    tags: ['React', 'Node.js', 'Express', 'MongoDB', 'REST API'],
     features: [
-      'Intuitive expense logging and categorization',
-      'Visual timeline and pie-chart analytics of spending',
-      'Monthly budget threshold alerts',
-      'Persistent data storage and CSV export functionality',
+      'Browse and filter available rental cars',
+      'Booking flow with date and availability checks',
+      'Backend integration for reservations and user records',
+      'Responsive interface tailored for customer conversion',
     ],
     github: 'https://github.com',
-    live: 'https://example.com',
+    live: null,
   },
 ]
 
@@ -106,7 +109,7 @@ export default function Projects() {
                   </p>
 
                   {/* Image */}
-                  <img src={`/images/${project.id}_image.png`} alt={project.title} className="w-full h-48 object-cover rounded mb-4" />
+                  <img src={`/images/${project.image || `${project.id}_image.png`}`} alt={project.title} className="w-full h-48 object-cover rounded mb-4" />
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1.5 mt-auto pt-4 border-t border-noir-gray/20">
