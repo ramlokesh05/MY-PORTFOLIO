@@ -109,7 +109,7 @@ export default function Projects() {
                   </p>
 
                   {/* Image */}
-                  <img src={`/images/${project.image || `${project.id}_image.png`}`} alt={project.title} className="w-full h-48 object-cover rounded mb-4" />
+                  <img src={`/images/${project.image || `${project.id}_image.png`}`} alt={project.title} className="w-full h-48 object-cover rounded mb-4 grayscale group-hover:grayscale-0 transition duration-500" />
 
                   {/* Tags */}
                   <div className="flex flex-wrap gap-1.5 mt-auto pt-4 border-t border-noir-gray/20">
