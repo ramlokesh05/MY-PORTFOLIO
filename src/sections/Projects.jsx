@@ -98,8 +98,6 @@ export default function Projects() {
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-lg text-noir-white group-hover:text-noir-red transition-colors duration-300 mb-2">RAM LOKESH</h3>
-
                   <p className="font-mono text-[10px] text-noir-muted tracking-wider mb-2 leading-relaxed">
                     {project.subtitle}
                   </p>
