@@ -7,7 +7,7 @@ const projects = [
   {
     id: '001',
     image: 'student-management.jpg',
-    title: 'Student Management System',
+    title: 'University Management System',
     subtitle: 'Role-Based Academic Administration Platform',
     description: 'A full-stack student management platform with role-based login for students, teachers, and admins. Built with a secure backend and database integration to manage profiles, attendance, marks, and academic workflows efficiently.',
     tags: ['React', 'Node.js', 'Express', 'MongoDB', 'RBAC'],
@@ -23,7 +23,7 @@ const projects = [
   {
     id: '002',
     image: 'expense-tracker.jpg',
-    title: 'Personal Expense Tracker',
+    title: 'PErsonal expense tracker',
     subtitle: 'Smart Daily Finance Monitor',
     description: 'A personal finance web app for tracking daily income and expenses, categorizing transactions, and analyzing spending behavior. Designed to help users monitor budgets and build healthy financial habits.',
     tags: ['React', 'JavaScript', 'Chart.js', 'CSS', 'Local Storage'],
@@ -39,7 +39,7 @@ const projects = [
   {
     id: '003',
     image: 'car-rental.jpg',
-    title: 'Client Car Rental Platform',
+    title: 'Car Rental Platfrom',
     subtitle: 'Customer-Focused Vehicle Booking System',
     description: 'A client project for a car rental business featuring vehicle listings, booking workflow, availability management, and customer-friendly UI. Built to streamline rental operations and improve online reservations.',
     tags: ['React', 'Node.js', 'Express', 'MongoDB', 'REST API'],
