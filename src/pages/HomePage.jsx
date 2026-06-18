@@ -1,287 +1,376 @@
-import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import gsap from 'gsap'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import ParticleBackground from '../components/ParticleBackground'
-import RoomWrapper from '../components/RoomWrapper'
+import { useEffect, useState, useCallback } from 'react'
+
+import { VscHome, VscAccount, VscCode, VscProject, VscWorkspaceTrusted, VscMail, VscLibrary } from 'react-icons/vsc'
+
+import Dock from '../components/Dock'
+import TextPressure from '../components/TextPressure'
 import About from '../sections/About'
 import Education from '../sections/Education'
 import Skills from '../sections/Skills'
-import Certifications from '../sections/Certifications'
 import Projects from '../sections/Projects'
+import Certifications from '../sections/Certifications'
 import Contact from '../sections/Contact'
+import Hyperspeed from '../components/Hyperspeed'
+import MagicRings from '../components/MagicRings'
+import Lightfall from '../components/Lightfall'
+import Threads from '../components/Threads'
+import GridScan from '../components/GridScan'
+import StarBorder from '../components/StarBorder'
+import Dither from '../components/Dither'
+import LightRays from '../components/LightRays'
+
+// ─── SECTION CONFIG ───
+const FOLDERS = [
+  { id: 'home', tab: 'Home' },
+  { id: 'about', tab: 'About' },
+  { id: 'skills', tab: 'Skills' },
+  { id: 'projects', tab: 'Projects' },
+  { id: 'certs', tab: 'Certifications' },
+  { id: 'contact', tab: 'Contact' },
+]
 
 export default function HomePage() {
-  const heroRef = useRef(null)
-  const nameRef = useRef(null)
-  const [displayText, setDisplayText] = useState('')
-  const fullName = 'RAM LOKESH'
-  const { scrollYProgress } = useScroll()
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0])
-  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.95])
+  const [activeIdx, setActiveIdx] = useState(0)
 
-  // Typing animation
   useEffect(() => {
-    let i = 0
-    const timer = setInterval(() => {
-      if (i <= fullName.length) {
-        setDisplayText(fullName.slice(0, i))
-        i++
-      } else {
-        clearInterval(timer)
-      }
-    }, 120)
-    return () => clearInterval(timer)
+    const scrollContainers = document.querySelectorAll('.no-scrollbar, .overflow-y-auto')
+    scrollContainers.forEach(container => {
+      container.scrollTop = 0
+    })
+  }, [activeIdx])
+
+  // ─── JUMP TO SECTION (No scrolling, just state change) ───
+  const goTo = useCallback((idx) => {
+    setActiveIdx(idx)
   }, [])
 
-  // GSAP hero intro
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.hero-subtitle',
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, delay: 1.5, ease: 'power3.out' }
-      )
-      gsap.fromTo('.hero-desc',
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, delay: 2.2, ease: 'power3.out' }
-      )
-      gsap.fromTo('.hero-cta',
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, delay: 2.6, ease: 'power3.out' }
-      )
-      gsap.fromTo('.hero-decoration',
-        { opacity: 0 },
-        { opacity: 1, duration: 1, delay: 0.5, stagger: 0.2 }
-      )
-    }, heroRef)
-    return () => ctx.revert()
-  }, [])
+  // The sections to render based on activeIdx
+  const renderSection = () => {
+    switch (activeIdx) {
+      case 0:
+        return (
+          <section
+            id="section-home"
+            className="hero-section flex flex-col items-center justify-center text-center px-6 relative w-full h-full"
+          >
+            {/* LOKESH Center Line - Absolutely Centered */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full flex flex-col items-center justify-center pointer-events-none drop-shadow-lg">
+              <div style={{ position: 'relative', width: '100%', maxWidth: '1120px', height: '220px', pointerEvents: 'auto' }}>
+                <TextPressure
+                  text="RAM LOKESH"
+                  flex={false}
+                  alpha={false}
+                  stroke={false}
+                  width
+                  weight
+                  italic
+                  textColor="#ffffff"
+                  strokeColor="#ff102a"
+                  minFontSize={64}
+                />
+              </div>
 
-  // Parallax mouse
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  useEffect(() => {
-    const handleMove = (e) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      })
+              {/* Red Line Divider */}
+              <div
+                style={{
+                  width: '48px',
+                  height: '2px',
+                  background: 'var(--color-red)',
+                  marginTop: '2.5rem',
+                }}
+              />
+
+              {/* Sub-text - repositioned under red line */}
+              <p
+                className="font-mono text-center pointer-events-auto"
+                style={{
+                  fontSize: '11px',
+                  letterSpacing: '0.18em',
+                  lineHeight: 2,
+                  maxWidth: '380px',
+                  marginTop: '2.5rem',
+                  color: 'var(--color-fg)',
+                  opacity: 0.9,
+                }}
+              >
+                <span className="whitespace-nowrap block">CLOUD ENGINEERING &amp; DEVOPS</span>
+                <span className="whitespace-nowrap block">KEEPING SERVERS ALIVE VIA SHEER WILLPOWER</span>
+              </p>
+
+              {/* Profile Social Buttons (Logos Only) */}
+              <div className="flex gap-6 mt-8 pointer-events-auto z-20">
+                <a
+                  href="https://www.linkedin.com/in/ramlokesh05/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/60 hover:text-[var(--color-red)] transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(255,16,42,0.6)]"
+                  aria-label="LinkedIn"
+                >
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://github.com/ramlokesh05"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/60 hover:text-[var(--color-red)] transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(255,16,42,0.6)]"
+                  aria-label="GitHub"
+                >
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                </a>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    const link = document.createElement('a');
+                    link.href = '/resume.pdf';
+                    link.target = '_blank';
+                    link.download = 'Ram_Lokesh_Resume.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                  }}
+                  className="text-white/60 hover:text-[var(--color-red)] transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(255,16,42,0.6)] cursor-pointer"
+                  aria-label="Resume"
+                >
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                  </svg>
+                </button>
+              </div>
+
+              {/* Button - spaced equally */}
+              <div style={{ marginTop: '2.5rem' }} className="pointer-events-auto">
+                <StarBorder
+                  as="button"
+                  color="#ff102a"
+                  speed="3s"
+                  onClick={() => goTo(1)}
+                  className="font-mono uppercase cursor-pointer"
+                  style={{ borderRadius: '20px' }}
+                  innerStyle={{
+                    padding: '14px 40px',
+                    fontSize: '10px',
+                    letterSpacing: '0.3em',
+                    background: 'black',
+                    color: 'white',
+                    border: '1px solid rgba(255,16,42,0.3)',
+                  }}
+                >
+                  EXPLORE PROFILE ➔
+                </StarBorder>
+              </div>
+            </div>
+          </section>
+        );
+      case 1:
+        return <div className="w-full h-full overflow-y-auto no-scrollbar pt-[80px] pb-[96px] flex items-center justify-center"><About /></div>;
+      case 2:
+        return <div className="w-full h-full overflow-y-auto no-scrollbar pt-[80px] pb-[96px] flex items-center justify-center"><Education /></div>;
+      case 3:
+        return <div className="w-full h-full overflow-y-auto no-scrollbar pt-[80px] pb-[96px] flex items-center justify-center"><Skills /></div>;
+      case 4:
+        return <div className="w-full h-full overflow-y-auto no-scrollbar pt-[80px] pb-[96px] flex items-center justify-center"><Projects /></div>;
+      case 5:
+        return <div className="w-full h-full overflow-y-auto no-scrollbar pt-[80px] pb-[96px] flex items-center justify-center"><Certifications /></div>;
+      case 6:
+        return <div className="w-full h-full overflow-y-auto no-scrollbar pt-[80px] pb-[96px] flex items-center justify-center"><Contact /></div>;
+      default:
+        return null;
     }
-    window.addEventListener('mousemove', handleMove)
-    return () => window.removeEventListener('mousemove', handleMove)
-  }, [])
+  }
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-      className="relative"
-    >
-      <ParticleBackground />
-      <Header />
-
-      {/* ─── HERO SECTION ─── */}
-      <motion.section
-        ref={heroRef}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
-        style={{ opacity: heroOpacity, scale: heroScale }}
+    <>
+      {/* ─── FIXED INTERACTIVE BACKGROUND ─── */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
       >
-        {/* Hero ambient red glow */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-noir-red/[0.04] blur-[150px]" />
-        </div>
-        {/* Parallax background elements */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            transform: `translate(${mousePos.x}px, ${mousePos.y}px)`,
-            transition: 'transform 0.3s ease-out',
+        {activeIdx === 2 ? (
+          <MagicRings
+            color="#EF4444"
+            colorTwo="#f5f5f5"
+            ringCount={6}
+            speed={1}
+            attenuation={10}
+            lineThickness={2}
+            baseRadius={0.35}
+            radiusStep={0.1}
+            scaleRate={0.1}
+            opacity={1}
+            blur={0}
+            noiseAmount={0.1}
+            rotation={0}
+            ringGap={1.5}
+            fadeIn={0.7}
+            fadeOut={0.5}
+            followMouse={false}
+            mouseInfluence={0.2}
+            hoverScale={1.2}
+            parallax={0.05}
+            clickBurst={false}
+          />
+        ) : activeIdx === 3 ? (
+          <Lightfall
+            colors={['#A6C8FF', '#5227FF', '#FF9FFC']}
+            backgroundColor="#000000"
+            speed={0.5}
+            streakCount={2}
+            streakWidth={1}
+            streakLength={1}
+            glow={1}
+            density={0.6}
+            twinkle={1}
+            zoom={3}
+            backgroundGlow={0.5}
+            opacity={1}
+            mouseInteraction
+            mouseStrength={0.5}
+            mouseRadius={1}
+            color1="#eaeced"
+            color2="#000000"
+            color3="#de072c"
+          />
+        ) : activeIdx === 1 ? (
+          <Threads
+            amplitude={1}
+            distance={0}
+            enableMouseInteraction
+          />
+        ) : activeIdx === 4 ? (
+          <Dither
+            waveColor={[1,0.2,0.2]}
+            disableAnimation={false}
+            enableMouseInteraction
+            mouseRadius={0.3}
+            colorNum={4}
+            waveAmplitude={0.3}
+            waveFrequency={3}
+            waveSpeed={0.05}
+          />
+        ) : activeIdx === 5 ? (
+          <LightRays
+            raysOrigin="top-center"
+            raysColor="#f39191"
+            raysSpeed={1}
+            lightSpread={0.5}
+            rayLength={3}
+            followMouse={true}
+            mouseInfluence={0.1}
+            noiseAmount={0}
+            distortion={0}
+            className="custom-rays"
+            pulsating={false}
+            fadeDistance={1}
+            saturation={1}
+          />
+        ) : activeIdx === 6 ? (
+          <GridScan
+            sensitivity={0.55}
+            lineThickness={1}
+            linesColor="#2F293A"
+            gridScale={0.1}
+            scanColor="#F43F5E"
+            scanOpacity={0.4}
+            enablePost
+            bloomIntensity={0.6}
+            chromaticAberration={0.002}
+            noiseIntensity={0.01}
+            lineJitter={0.1}
+            scanGlow={0.5}
+            scanSoftness={2}
+            enableWebcam={false}
+            showPreview={false}
+          />
+        ) : (
+          <Hyperspeed
+          effectOptions={{
+            onSpeedUp: () => { },
+            onSlowDown: () => { },
+            distortion: 'mountainDistortion',
+            length: 400,
+            roadWidth: 9,
+            islandWidth: 2,
+            lanesPerRoad: 3,
+            fov: 90,
+            fovSpeedUp: 150,
+            speedUp: 2,
+            carLightsFade: 0.4,
+            totalSideLightSticks: 50,
+            lightPairsPerRoadWay: 50,
+            shoulderLinesWidthPercentage: 0.05,
+            brokenLinesWidthPercentage: 0.1,
+            brokenLinesLengthPercentage: 0.5,
+            lightStickWidth: [0.12, 0.5],
+            lightStickHeight: [1.3, 1.7],
+            movingAwaySpeed: [60, 80],
+            movingCloserSpeed: [-120, -160],
+            carLightsLength: [20, 60],
+            carLightsRadius: [0.05, 0.14],
+            carWidthPercentage: [0.3, 0.5],
+            carShiftX: [-0.2, 0.2],
+            carFloorSeparation: [0.05, 1],
+            colors: {
+              roadColor: 0x080808,
+              islandColor: 0x0a0a0a,
+              background: 0x000000,
+              shoulderLines: 0x131318,
+              brokenLines: 0x131318,
+              leftCars: [0xff102a, 0xeb383e, 0xff102a],
+              rightCars: [0xdadafa, 0xbebae3, 0x8f97e4],
+              sticks: 0xdadafa
+            }
           }}
-        >
-          {/* Decorative grid lines */}
-          <div className="hero-decoration absolute top-20 left-10 md:left-20 w-40 h-[1px] bg-gradient-to-r from-noir-red/20 to-transparent" />
-          <div className="hero-decoration absolute top-32 left-10 md:left-20 w-20 h-[1px] bg-gradient-to-r from-noir-gray/30 to-transparent" />
-          <div className="hero-decoration absolute bottom-32 right-10 md:right-20 w-32 h-[1px] bg-gradient-to-l from-noir-red/20 to-transparent" />
-          <div className="hero-decoration absolute top-1/4 right-10 md:right-32 font-mono text-[9px] text-noir-gray tracking-[0.5em] rotate-90">
-            PORTFOLIO.EXE
-          </div>
-          <div className="hero-decoration absolute bottom-1/4 left-10 md:left-32 font-mono text-[9px] text-noir-gray tracking-[0.5em] -rotate-90">
-            SYS://ACTIVE
-          </div>
-        </motion.div>
+        />
+        )}
 
-        {/* Hero Content */}
-        <div className="relative z-10 text-center px-6 max-w-4xl">
-          {/* Classification label */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="mb-8"
-          >
-            <span className="font-mono text-[10px] tracking-[0.5em] text-noir-red border border-noir-red/20 px-4 py-1">
-              DOSSIER #2026
-            </span>
-          </motion.div>
+        {/* Dark overlay for text legibility */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: 'rgba(0, 0, 0, 0.42)',
+          }}
+        />
+      </div>
 
-          {/* Name with typing */}
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-9xl text-noir-white mb-4 relative">
-            <span ref={nameRef}>{displayText}</span>
-            <motion.span
-              className="inline-block w-[3px] h-[0.9em] bg-noir-red ml-1 align-middle"
-              animate={{ opacity: [1, 0] }}
-              transition={{ duration: 0.75, repeat: Infinity, repeatType: 'reverse' }}
-            />
-          </h1>
+      {/* ─── SITE SHELL (sits above the fixed gradient) ─── */}
+      <div
+        className="relative w-full h-screen text-[var(--color-fg)] overflow-hidden flex flex-col"
+        style={{ zIndex: 1 }}
+      >
+        {/* ─── MAIN CONTENT AREA (No body scroll) ─── */}
+        <main className="flex-1 w-full h-full relative overflow-hidden flex flex-col">
+          {renderSection()}
+        </main>
 
-          {/* Title */}
-          <div className="hero-subtitle opacity-0">
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <div className="h-[1px] w-12 bg-noir-red/40" />
-              <h2 className="font-mono text-sm md:text-base tracking-[0.3em] text-noir-muted uppercase">
-                Cloud & DevOps Engineer
-              </h2>
-              <div className="h-[1px] w-12 bg-noir-red/40" />
-            </div>
-          </div>
+        {/* ─── MAC-STYLE BOTTOM DOCK ─── */}
+        <Dock
+          items={[
+            { icon: <VscHome size={18} />, label: 'Home', onClick: () => goTo(0) },
+            { icon: <VscAccount size={18} />, label: 'About', onClick: () => goTo(1) },
+            { icon: <VscLibrary size={18} />, label: 'Education', onClick: () => goTo(2) },
+            { icon: <VscCode size={18} />, label: 'Skills', onClick: () => goTo(3) },
+            { icon: <VscProject size={18} />, label: 'Projects', onClick: () => goTo(4) },
+            { icon: <VscWorkspaceTrusted size={18} />, label: 'Certs', onClick: () => goTo(5) },
+            { icon: <VscMail size={18} />, label: 'Contact', onClick: () => goTo(6) },
+          ]}
+          panelHeight={68}
+          baseItemSize={50}
+          magnification={70}
+        />
 
-          {/* Description */}
-          <p className="hero-desc opacity-0 font-sans text-sm md:text-base text-noir-muted max-w-xl mx-auto leading-relaxed mb-10">
-            Architecting resilient cloud infrastructure and automating the impossible.
-            Specializing in AWS, Kubernetes, and CI/CD pipelines that never sleep.
-          </p>
-
-          {/* CTAs */}
-          <div className="hero-cta opacity-0 flex flex-col items-center gap-4">
-            {/* Primary actions */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <motion.a
-                href="#projects"
-                onClick={(e) => {
-                  e.preventDefault()
-                  window.__navClickedTarget = 'projects'
-                  document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })
-                }}
-                className="magnetic-btn font-mono text-xs tracking-[0.2em] px-8 py-3 border border-noir-red/40 text-noir-red hover:bg-noir-red/10 transition-all cursor-hover"
-                whileHover={{ boxShadow: '0 0 20px rgba(255,43,43,0.3)' }}
-                whileTap={{ scale: 0.97 }}
-              >
-                VIEW PROJECTS
-              </motion.a>
-              <motion.a
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault()
-                  window.__navClickedTarget = 'contact'
-                  document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
-                }}
-                className="magnetic-btn font-mono text-xs tracking-[0.2em] px-8 py-3 border border-noir-gray text-noir-muted hover:text-noir-red hover:border-noir-red transition-all cursor-hover"
-                whileHover={{ boxShadow: '0 0 15px rgba(255,43,43,0.2)' }}
-                whileTap={{ scale: 0.97 }}
-              >
-                CONTACT ME
-              </motion.a>
-            </div>
-
-            {/* Social + Resume row */}
-            <div className="flex flex-wrap justify-center gap-3 pt-1">
-              <motion.a
-                href="https://www.linkedin.com/in/ramlokesh05/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] px-5 py-2 border border-noir-gray/60 text-noir-muted hover:text-noir-red hover:border-noir-red transition-all cursor-hover"
-                whileHover={{ boxShadow: '0 0 12px rgba(255,43,43,0.2)', scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-              >
-                <span className="text-noir-red text-xs">◆</span>
-                LINKEDIN
-              </motion.a>
-              <motion.a
-                href="https://github.com/ramlokesh05"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] px-5 py-2 border border-noir-gray/60 text-noir-muted hover:text-noir-red hover:border-noir-red transition-all cursor-hover"
-                whileHover={{ boxShadow: '0 0 12px rgba(255,43,43,0.2)', scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-              >
-                <span className="text-noir-red text-xs">⌥</span>
-                GITHUB
-              </motion.a>
-              <motion.a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 font-mono text-[10px] tracking-[0.2em] px-5 py-2 border border-noir-red/30 text-noir-red hover:bg-noir-red/10 transition-all cursor-hover group"
-                whileHover={{ boxShadow: '0 0 15px rgba(255,43,43,0.25)', scale: 1.04 }}
-                whileTap={{ scale: 0.96 }}
-              >
-                <span className="text-xs group-hover:translate-x-[2px] group-hover:-translate-y-[2px] transition-transform">↗</span>
-                VIEW RESUME
-              </motion.a>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          animate={{ opacity: [0.3, 0.8, 0.3] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <span className="font-mono text-[8px] tracking-[0.4em] text-noir-muted">SCROLL</span>
-          <motion.div
-            className="w-[1px] h-8 bg-gradient-to-b from-noir-red to-transparent"
-            animate={{ height: [20, 32, 20] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        </motion.div>
-      </motion.section>
-
-      {/* ─── SECTIONS ─── */}
-      <main className="relative z-10">
-        {/* Ambient red glow bleeds — toned down, grainy */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          {/* Glow spots at reduced opacity */}
-          <div className="absolute top-[5%] left-[-5%] w-[500px] h-[500px] rounded-full bg-noir-red/[0.015] blur-[140px]" />
-          <div className="absolute top-[25%] right-[-8%] w-[400px] h-[400px] rounded-full bg-noir-red/[0.012] blur-[120px]" />
-          <div className="absolute top-[50%] left-[10%] w-[350px] h-[350px] rounded-full bg-noir-red/[0.01] blur-[120px]" />
-          <div className="absolute top-[72%] right-[5%] w-[450px] h-[450px] rounded-full bg-noir-red/[0.015] blur-[150px]" />
-          <div className="absolute top-[90%] left-[30%] w-[300px] h-[300px] rounded-full bg-noir-red/[0.012] blur-[100px]" />
-          {/* Grain texture over the whole ambient layer */}
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
-              backgroundSize: '200px 200px',
-              opacity: 0.06,
-              mixBlendMode: 'overlay',
-            }}
-          />
-        </div>
-
-        <RoomWrapper id="about" roomNumber="01" roomName="The Study">
-          <About />
-        </RoomWrapper>
-        <RoomWrapper id="education" roomNumber="02" roomName="The Archive">
-          <Education />
-        </RoomWrapper>
-        <RoomWrapper id="skills" roomNumber="03" roomName="The Armory">
-          <Skills />
-        </RoomWrapper>
-        <RoomWrapper id="certifications" roomNumber="04" roomName="The Vault">
-          <Certifications />
-        </RoomWrapper>
-        <RoomWrapper id="projects" roomNumber="05" roomName="The Workshop">
-          <Projects />
-        </RoomWrapper>
-        <RoomWrapper id="contact" roomNumber="06" roomName="The Parlour">
-          <Contact />
-        </RoomWrapper>
-      </main>
-
-      <Footer />
-    </motion.div>
+      </div>
+    </>
   )
 }

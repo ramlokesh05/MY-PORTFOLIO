@@ -1,125 +1,228 @@
-import { motion } from 'framer-motion'
-import SectionReveal from '../components/SectionReveal'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import TextType from '../components/TextType'
 
-const educationData = [
+const educationDetails = [
   {
-    degree: 'Bachelor of Technology',
-    field: 'Undergraduate Degree',
-    school: 'Lovely Professional University, Phagwara',
-    year: 'Expected 2027',
-    gpa: '6.6 / 10',
+    year: "2021",
+    degree: "Secondary Education (10th)",
+    major: "General Academics",
+    institution: "Ashram Public School, Kakinada",
+    gpa: "8.0 CGPA",
     highlights: [
-      'Pursuing comprehensive B.Tech coursework',
-      'Specializing in Cloud Computing & DevOps principles',
-      'Building scalable infrastructure projects'
-    ],
+      "Graduated with strong academic standing",
+      "Solidified foundational logic and mathematical abilities"
+    ]
   },
   {
-    degree: 'Higher Secondary Education (12th)',
-    field: 'Science Stream',
-    school: 'Aditya Jr College, Kakinada',
-    year: '2021 — 2023',
-    gpa: '7.0 GPA',
+    year: "2021 — 2023",
+    degree: "Higher Secondary Education (12th)",
+    major: "Science Stream",
+    institution: "Aditya Jr College, Kakinada",
+    gpa: "7.0 GPA",
     highlights: [
-      'Core focus on Mathematics, Physics, and Chemistry',
-      'Developed strong analytical and problem-solving skills'
-    ],
+      "Core focus on Mathematics, Physics, and Chemistry",
+      "Developed strong analytical and problem-solving skills"
+    ]
   },
   {
-    degree: 'Secondary Education (10th)',
-    field: 'General Academics',
-    school: 'Ashram Public School, Kakinada',
-    year: 'Completed 2021',
-    gpa: '8.0 CGPA',
+    year: "Expected 2027",
+    degree: "Bachelor of Technology",
+    major: "Computer Science & Engineering",
+    institution: "Lovely Professional University, Phagwara",
+    gpa: "6.6 / 10",
     highlights: [
-      'Graduated with strong academic standing',
-      'Solidified foundational logic and mathematical abilities'
-    ],
-  },
-]
+      "Pursuing comprehensive B.Tech coursework",
+      "Specializing in Cloud Computing & DevOps principles",
+      "Building scalable infrastructure projects"
+    ]
+  }
+];
 
 export default function Education() {
+  const [activeStep, setActiveStep] = useState(2); // Start at B.Tech (index 2)
+
   return (
-    <section className="relative py-32 px-6">
-      <div className="max-w-5xl mx-auto">
-        {/* Section Header */}
-        <SectionReveal variant="fadeUp">
-          <div className="flex items-center gap-4 mb-16">
-            <span className="font-mono text-[10px] tracking-[0.5em] text-noir-red">02</span>
-            <h2 className="font-serif text-3xl md:text-5xl text-noir-white">Education</h2>
-            <div className="flex-1 h-[1px] bg-gradient-to-r from-noir-gray to-transparent ml-4" />
-          </div>
-        </SectionReveal>
+    <div className="w-full h-full flex flex-col justify-center max-w-6xl mx-auto px-6 text-[var(--color-fg)]">
 
-        {/* Timeline */}
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-noir-red/40 via-noir-gray to-noir-gray/20 md:-translate-x-[0.5px]" />
+      {/* ─── SECTION HEADER ─── */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="mb-8 md:mb-12 text-center"
+      >
+        <span className="font-mono block text-[var(--color-red)] text-[10px] tracking-[0.3em] font-bold mb-2 uppercase">
+          Forced Learning Phases
+        </span>
+        <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter drop-shadow-md min-h-[1.2em] flex items-center justify-center">
+          <TextType
+            text={[
+              "Where I Acquired Paper Credentials",
+              "Forced Learning Phases",
+              "Knowledge.exe Loading...",
+              "Grades Were Sacrificed Here"
+            ]}
+            typingSpeed={55}
+            deletingSpeed={30}
+            pauseDuration={2200}
+            loop
+            showCursor
+            cursorCharacter="_"
+            cursorBlinkDuration={0.5}
+            startOnVisible
+            className="font-black uppercase tracking-tighter"
+          />
+        </h2>
+        <div className="w-16 h-1 bg-[var(--color-red)] mx-auto mt-4 rounded-full" />
+      </motion.div>
 
-          {educationData.map((edu, i) => (
-            <SectionReveal
-              key={i}
-              variant={i % 2 === 0 ? 'fadeLeft' : 'fadeRight'}
-              delay={i * 0.2}
-              className="relative mb-16 last:mb-0"
-            >
-              <div className={`flex items-start gap-8 ${
-                i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-              }`}>
-                {/* Timeline dot */}
-                <div className="absolute left-4 md:left-1/2 w-3 h-3 -translate-x-[5px] md:-translate-x-[6px] mt-6 z-10">
-                  <motion.div
-                    className="w-full h-full rounded-full bg-noir-red"
-                    whileInView={{ scale: [0, 1.3, 1] }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: i * 0.2 }}
-                  />
-                  <div className="absolute inset-0 rounded-full bg-noir-red animate-ping opacity-20" />
-                </div>
+      {/* ─── DYNAMIC JOURNEY INTERFACE ─── */}
+      <div className="flex flex-col justify-center max-h-[70vh]">
 
-                {/* Content card */}
-                <motion.div
-                  className={`ml-12 md:ml-0 md:w-[45%] glass p-6 paper-texture group cursor-hover hover:border-noir-red/20 transition-all duration-500 ${
-                    i % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
-                  }`}
-                  whileHover={{ boxShadow: '0 0 20px rgba(255,43,43,0.1)' }}
+        {/* Horizontal Journey Timeline Indicator (Always visible, interactive) */}
+        <div className="relative w-full max-w-3xl mx-auto mb-10 px-4">
+          {/* Background Track Line */}
+          <div className="absolute top-1/2 left-0 right-0 h-[2px] bg-white/10 -translate-y-1/2 z-0" />
+
+          {/* Active Progress Fill */}
+          <div
+            className="absolute top-1/2 left-0 h-[2px] bg-[var(--color-red)] -translate-y-1/2 transition-all duration-500 ease-out z-0"
+            style={{ width: `${(activeStep / (educationDetails.length - 1)) * 100}%` }}
+          />
+
+          {/* Interactive Steps */}
+          <div className="relative flex justify-between z-10">
+            {educationDetails.map((edu, idx) => {
+              const isActive = idx === activeStep;
+              const isCompleted = idx < activeStep;
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setActiveStep(idx)}
+                  className="flex flex-col items-center focus:outline-none group cursor-pointer bg-transparent border-0 p-0"
                 >
-                  {/* Year badge */}
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="font-mono text-[9px] tracking-[0.3em] text-noir-red border border-noir-red/30 px-2 py-0.5">
-                      {edu.year}
-                    </span>
+                  {/* Step Node Circle */}
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 font-mono text-xs font-bold ${isActive
+                        ? 'border-[var(--color-red)] bg-black text-[var(--color-red)] shadow-[0_0_15px_rgba(255,16,42,0.4)] scale-110'
+                        : isCompleted
+                          ? 'border-[var(--color-red)] bg-[var(--color-red)] text-white'
+                          : 'border-white/20 bg-black/80 text-white/50 group-hover:border-white/40'
+                      }`}
+                  >
+                    {idx + 1}
                   </div>
+                  {/* Step Label/Year */}
+                  <span
+                    className={`mt-2 font-mono text-[9px] md:text-[10px] tracking-wider uppercase transition-colors duration-300 ${isActive ? 'text-[var(--color-red)] font-bold' : 'text-white/60'
+                      }`}
+                  >
+                    {edu.year.includes('Expected') ? '2027' : edu.year.includes('Completed') ? '2021' : edu.year.split(' — ')[1] || edu.year}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-                  <h3 className="font-serif text-xl text-noir-white group-hover:text-noir-red transition-colors mb-1">
+        {/* ─── DESKTOP/LARGE TABLET VIEW (3 Columns Connected) ─── */}
+        <div className="hidden md:grid grid-cols-3 gap-6 items-stretch w-full max-w-5xl mx-auto">
+          {educationDetails.map((edu, idx) => {
+            const isActive = idx === activeStep;
+            return (
+              <div
+                key={idx}
+                onClick={() => setActiveStep(idx)}
+                className={`relative flex flex-col p-6 rounded-2xl border transition-all duration-500 cursor-pointer ${isActive
+                    ? 'bg-black/90 border-[var(--color-red)] shadow-[0_0_30px_rgba(255,16,42,0.15)] scale-[1.03] z-10'
+                    : 'bg-black/40 border-white/5 opacity-60 hover:opacity-100 hover:border-white/10'
+                  }`}
+              >
+                {/* Degree Title & Year */}
+                <div className="mb-4">
+                  <span className="font-mono text-[9px] text-[var(--color-red)] tracking-widest uppercase block mb-1">
+                    {edu.year}
+                  </span>
+                  <h3 className="text-lg font-black tracking-tight text-white line-clamp-2">
                     {edu.degree}
                   </h3>
-                  <p className="font-mono text-xs text-noir-muted tracking-wider mb-1">
-                    {edu.field}
+                  <p className="text-xs text-white/60 font-mono mt-1">
+                    {edu.major}
                   </p>
-                  <p className="text-sm text-noir-text mb-3">{edu.school}</p>
+                </div>
 
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="font-mono text-[10px] tracking-wider text-noir-muted">GPA:</span>
-                    <span className="font-mono text-sm text-noir-red">{edu.gpa}</span>
-                  </div>
+                <div className="font-wide text-xs text-white tracking-wide font-bold mb-3 uppercase">
+                  {edu.institution}
+                </div>
 
-                  <div className="border-t border-noir-gray/30 pt-3">
-                    <ul className="space-y-1.5">
-                      {edu.highlights.map((h, j) => (
-                        <li key={j} className="flex items-start gap-2 text-xs text-noir-muted">
-                          <span className="text-noir-red mt-0.5">▹</span>
-                          {h}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-white/5 border border-white/10 rounded-md font-mono text-[11px] text-[var(--color-red)] w-fit mb-4">
+                  GPA: <span className="font-bold">{edu.gpa}</span>
+                </div>
+
+                <div className="border-t border-white/5 pt-4 flex-1">
+                  <ul className="space-y-2">
+                    {edu.highlights.map((highlight, hIdx) => (
+                      <li key={hIdx} className="flex items-start gap-2 text-xs text-white/70 leading-normal">
+                        <span className="text-[var(--color-red)] mt-0.5">▹</span>
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </SectionReveal>
-          ))}
+            );
+          })}
         </div>
+
+        {/* ─── MOBILE VIEW (Single Animated Card) ─── */}
+        <div className="block md:hidden w-full max-w-md mx-auto px-2">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeStep}
+              initial={{ opacity: 0, x: 15 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -15 }}
+              transition={{ duration: 0.3, ease: 'easeInOut' }}
+              className="bg-black/90 border border-[var(--color-red)] rounded-2xl p-6 shadow-[0_0_25px_rgba(255,16,42,0.1)] flex flex-col min-h-[260px]"
+            >
+              <div className="flex justify-between items-start mb-3 gap-2">
+                <div>
+                  <span className="font-mono text-[9px] text-[var(--color-red)] tracking-widest uppercase block mb-1">
+                    {educationDetails[activeStep].year}
+                  </span>
+                  <h3 className="text-xl font-bold tracking-tight text-white leading-tight">
+                    {educationDetails[activeStep].degree}
+                  </h3>
+                  <p className="text-xs text-white/60 font-mono mt-1">
+                    {educationDetails[activeStep].major}
+                  </p>
+                </div>
+                <div className="inline-flex items-center px-2 py-0.5 bg-[var(--color-red)]/10 border border-[var(--color-red)]/20 rounded font-mono text-[10px] text-[var(--color-red)] font-bold whitespace-nowrap">
+                  {educationDetails[activeStep].gpa}
+                </div>
+              </div>
+
+              <div className="font-wide text-xs text-white tracking-wide font-bold mb-4 uppercase">
+                {educationDetails[activeStep].institution}
+              </div>
+
+              <div className="border-t border-white/5 pt-4 flex-1">
+                <ul className="space-y-2">
+                  {educationDetails[activeStep].highlights.map((highlight, hIdx) => (
+                    <li key={hIdx} className="flex items-start gap-2 text-xs text-white/70 leading-normal">
+                      <span className="text-[var(--color-red)] mt-0.5">▹</span>
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
       </div>
-    </section>
+
+    </div>
   )
 }

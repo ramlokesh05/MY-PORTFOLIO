@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
+import StarBorder from './StarBorder'
 
 export default function ProjectModal({ project, onClose }) {
   if (!project) return null
@@ -30,13 +31,22 @@ export default function ProjectModal({ project, onClose }) {
           onClick={(e) => e.stopPropagation()}
         >
           {/* Close button */}
-          <button
+          <StarBorder
+            as="button"
+            color="#ff102a"
+            speed="3s"
+            thickness={1}
             onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-noir-muted hover:text-noir-red transition-colors cursor-hover font-mono"
+            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center text-noir-muted hover:text-noir-red transition-colors cursor-hover font-mono p-0"
+            style={{ borderRadius: '10px' }}
+            innerStyle={{
+              background: 'black',
+              padding: '0px',
+            }}
             aria-label="Close"
           >
             ✕
-          </button>
+          </StarBorder>
 
           {/* Top accent */}
           <div className="h-[2px] bg-gradient-to-r from-noir-red via-noir-red/50 to-transparent" />
@@ -98,24 +108,46 @@ export default function ProjectModal({ project, onClose }) {
             {/* Links */}
             <div className="flex gap-4 pt-4 border-t border-noir-gray">
               {project.github && (
-                <a
+                <StarBorder
+                  as="a"
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="magnetic-btn font-mono text-xs tracking-wider px-5 py-2 border border-noir-gray text-noir-muted hover:text-noir-red hover:border-noir-red transition-all cursor-hover"
+                  color="#ff102a"
+                  speed="3s"
+                  className="font-mono text-xs tracking-wider cursor-hover"
+                  style={{ borderRadius: '10px' }}
+                  innerStyle={{
+                    background: 'black',
+                    color: 'var(--color-fg)',
+                    border: '1px solid var(--color-border)',
+                    padding: '8px 20px',
+                    textDecoration: 'none'
+                  }}
                 >
                   SOURCE CODE
-                </a>
+                </StarBorder>
               )}
               {project.live && (
-                <a
+                <StarBorder
+                  as="a"
                   href={project.live}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="magnetic-btn font-mono text-xs tracking-wider px-5 py-2 bg-noir-red/10 border border-noir-red/30 text-noir-red hover:bg-noir-red/20 transition-all cursor-hover"
+                  color="#ff102a"
+                  speed="3s"
+                  className="font-mono text-xs tracking-wider cursor-hover"
+                  style={{ borderRadius: '10px' }}
+                  innerStyle={{
+                    background: 'black',
+                    color: 'var(--color-red)',
+                    border: '1px solid rgba(255,16,42,0.3)',
+                    padding: '8px 20px',
+                    textDecoration: 'none'
+                  }}
                 >
                   LIVE DEMO
-                </a>
+                </StarBorder>
               )}
             </div>
           </div>

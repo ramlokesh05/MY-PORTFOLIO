@@ -1,132 +1,122 @@
-import { motion } from 'framer-motion'
-import SectionReveal from '../components/SectionReveal'
+import { useRef, useState, useEffect } from 'react'
+import { motion, useInView } from 'framer-motion'
+import TiltedCard from '../components/TiltedCard'
+import BlurText from '../components/BlurText'
 
 export default function About() {
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, margin: '-100px' })
+  const [grayscaleVal, setGrayscaleVal] = useState(100)
+
+  useEffect(() => {
+    const scrollParent = sectionRef.current?.closest('.overflow-y-auto')
+    if (!scrollParent) return
+
+    const handleScroll = () => {
+      if (!sectionRef.current) return
+      const parentRect = scrollParent.getBoundingClientRect()
+      const elementRect = sectionRef.current.getBoundingClientRect()
+
+      const relativeTop = elementRect.top - parentRect.top
+      const containerHeight = parentRect.height
+      const elementHeight = elementRect.height
+
+      const elementCenter = relativeTop + elementHeight / 2
+      const containerCenter = containerHeight / 2
+
+      const distanceFromCenter = Math.abs(elementCenter - containerCenter)
+      const halfContainer = containerHeight / 2.5
+
+      let progress = 1 - (distanceFromCenter / halfContainer)
+      progress = Math.max(0, Math.min(1, progress))
+
+      setGrayscaleVal((1 - progress) * 100)
+    }
+
+    scrollParent.addEventListener('scroll', handleScroll)
+    // Initial run to set the state based on current scroll
+    handleScroll()
+
+    window.addEventListener('resize', handleScroll)
+
+    return () => {
+      scrollParent.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
+  }, [])
+
   return (
-    <section className="relative py-32 px-6">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
-        <SectionReveal variant="fadeUp">
-          <div className="flex items-center gap-4 mb-16">
-            <span className="font-mono text-[10px] tracking-[0.5em] text-noir-red">01</span>
-            <h2 className="font-serif text-3xl md:text-5xl text-noir-white">About Me</h2>
-            <div className="flex-1 h-[1px] bg-gradient-to-r from-noir-gray to-transparent ml-4" />
-          </div>
-        </SectionReveal>
+    <div ref={sectionRef} className="w-full max-w-5xl mx-auto px-6 py-16 flex flex-col items-center text-center">
 
-        <div className="grid md:grid-cols-5 gap-12 items-start">
-          {/* Profile Image */}
-          <SectionReveal variant="fadeLeft" className="md:col-span-2">
-            <div className="relative group cursor-hover">
-              <div className="relative overflow-hidden border border-noir-gray">
-                {/* Profile image with noir styling -> color on hover */}
-                <div className="aspect-[3/4] bg-noir-mid flex items-center justify-center relative overflow-hidden">
-                  <img 
-                    src="/profile.jpg" 
-                    alt="Ram Lokesh"
-                    className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 group-hover:scale-105 filter grayscale contrast-125 sepia-[.20] hue-rotate-[-30deg] group-hover:grayscale-0 group-hover:sepia-0 group-hover:hue-rotate-0 group-hover:contrast-100"
-                  />
-                  {/* Grid pattern overlay */}
-                  <div className="absolute inset-0 opacity-10 mix-blend-overlay"
-                    style={{
-                      backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
-                      backgroundSize: '20px 20px',
-                    }}
-                  />
-                </div>
-
-                {/* Red glow on hover */}
-                <div className="absolute inset-0 bg-noir-red/0 group-hover:bg-noir-red/10 transition-all duration-500 mix-blend-color" />
-                <div className="absolute inset-0 border border-transparent group-hover:border-noir-red/40 transition-all duration-500 group-hover:shadow-[inset_0_0_40px_rgba(255,43,43,0.15)]" />
-
-                {/* Corner markers */}
-                <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-noir-gray/40 group-hover:border-noir-red/60 transition-colors" />
-                <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-noir-gray/40 group-hover:border-noir-red/60 transition-colors" />
-                <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-noir-gray/40 group-hover:border-noir-red/60 transition-colors" />
-                <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-noir-gray/40 group-hover:border-noir-red/60 transition-colors" />
-              </div>
-
-              {/* Label */}
-              <div className="mt-3 font-mono text-[9px] tracking-[0.3em] text-noir-muted text-center">
-                SUBJECT: RAM LOKESH // ENGINEER
-              </div>
-            </div>
-          </SectionReveal>
-
-          {/* Bio Content */}
-          <div className="md:col-span-3 space-y-6">
-            
-            {/* Timeline snippet (Moved to top) */}
-            <SectionReveal variant="fadeRight" delay={0.2}>
-              <div className="glass p-6 paper-texture hover:border-noir-red/20 transition-colors duration-500">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500/60" />
-                  <span className="font-mono text-[10px] tracking-[0.3em] text-emerald-500">
-                    CURRENT STATUS
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
-                  <div>
-                    <p className="text-noir-white text-sm font-medium">Open to Opportunities</p>
-                    <p className="font-mono text-[10px] text-noir-muted tracking-wider">
-                      Cloud Engineer / DevOps / SRE Roles
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </SectionReveal>
-
-            <SectionReveal variant="fadeRight" delay={0.4}>
-              <div className="glass p-6 paper-texture hover:border-noir-red/20 transition-colors duration-500">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="w-2 h-2 rounded-full bg-noir-red/60" />
-                  <span className="font-mono text-[10px] tracking-[0.3em] text-noir-red">
-                    PROFILE SUMMARY
-                  </span>
-                </div>
-                <p className="text-noir-text leading-relaxed text-sm mb-4">
-                  I am a Computer Science Engineer specializing in Cloud Engineering and DevOps,
-                  with hands-on experience designing, deploying, and managing cloud-native applications
-                  and infrastructure at scale.
-                </p>
-                <p className="text-noir-text leading-relaxed text-sm">
-                  My expertise spans across AWS, Azure, and GCP platforms, with deep knowledge in
-                  containerization, orchestration, infrastructure as code, and CI/CD pipeline design.
-                  I am passionate about building systems that are resilient, scalable, and automated.
-                </p>
-              </div>
-            </SectionReveal>
-
-            {/* Quick stats */}
-            <SectionReveal variant="fadeRight" delay={0.6}>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {[
-                  { val: '3', label: 'MONTHS EXP' },
-                  { val: '3', label: 'PROJECTS' },
-                  { val: '10', label: 'CERTIFICATIONS' },
-                  { val: '2027', label: 'GRADUATION' },
-                ].map((stat) => (
-                  <motion.div
-                    key={stat.label}
-                    className="glass p-4 text-center cursor-hover group hover:border-noir-red/20 transition-colors duration-500"
-                    whileHover={{ scale: 1.05, boxShadow: '0 0 15px rgba(255,43,43,0.15)' }}
-                  >
-                    <div className="font-serif text-2xl text-noir-white group-hover:text-noir-red transition-colors">
-                      {stat.val}
-                    </div>
-                    <div className="font-mono text-[8px] tracking-[0.2em] text-noir-muted mt-1">
-                      {stat.label}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </SectionReveal>
-
-
-          </div>
-        </div>
+      {/* Title (Blur-in Animation) */}
+      <div className="mb-10 w-full flex justify-center">
+        <BlurText
+          text="Who Am I Anyway?"
+          delay={120}
+          animateBy="words"
+          direction="top"
+          stepDuration={0.4}
+          className="font-wide font-black text-[7vw] md:text-[5vw] leading-none tracking-tighter text-[var(--color-fg)] uppercase justify-center"
+        />
       </div>
-    </section>
+
+      {/* Bio and Photo Grid */}
+      <div className="grid md:grid-cols-5 gap-12 items-center w-full mt-6 text-left">
+        {/* Left: Tilted Card Photo Section */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="md:col-span-2 flex justify-center w-full"
+        >
+          <TiltedCard
+            imageSrc="/profile.jpg"
+            altText="Ram Lokesh"
+            captionText="Ram Lokesh | Engineer"
+            containerHeight="380px"
+            containerWidth="280px"
+            imageHeight="380px"
+            imageWidth="280px"
+            rotateAmplitude={12}
+            scaleOnHover={1.05}
+            showMobileWarning={false}
+            showTooltip
+            imageStyle={{ filter: `grayscale(${grayscaleVal}%)` }}
+          />
+        </motion.div>
+
+        {/* Right: Bio and Stats */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          className="md:col-span-3 flex flex-col items-center md:items-start text-center md:text-left"
+        >
+          <p className="font-body text-base md:text-lg text-[var(--color-fg)] leading-relaxed mb-8 opacity-90">
+            I am a Computer Science Engineering student specializing in{" "}
+            <span className="text-[var(--color-red)] font-bold tracking-wide whitespace-nowrap">Cloud Computing</span>{" "}
+            and{" "}
+            <span className="text-[var(--color-red)] font-bold tracking-wide">DevOps</span>{" "}
+            orchestration. My focus lies in building scalable architectures, automating CI/CD pipelines, and writing robust infrastructure as code.
+          </p>
+
+          <div className="flex flex-wrap justify-center md:justify-start gap-8 md:gap-12 w-full mt-4">
+            <div className="flex flex-col items-center md:items-start">
+              <span className="font-mono text-2xl md:text-3xl font-bold text-[var(--color-fg)]">2027</span>
+              <span className="font-mono text-[9px] tracking-widest text-[var(--color-red)] uppercase mt-2">Graduation (Hopefully)</span>
+            </div>
+            <div className="flex flex-col items-center md:items-start">
+              <span className="font-mono text-2xl md:text-3xl font-bold text-[var(--color-fg)]">3+</span>
+              <span className="font-mono text-[9px] tracking-widest text-[var(--color-red)] uppercase mt-2">Months of Survival</span>
+            </div>
+            <div className="flex flex-col items-center md:items-start">
+              <span className="font-mono text-2xl md:text-3xl font-bold text-[var(--color-fg)]">6</span>
+              <span className="font-mono text-[9px] tracking-widest text-[var(--color-red)] uppercase mt-2">Shiny Badges</span>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+    </div>
   )
 }
