@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, useNavigate } from 'react-router-dom'
+import { HashRouter, useNavigate } from 'react-router-dom'
 import App from './App.jsx'
 import { TransitionProvider } from './components/PageTransition.jsx'
 import './index.css'
@@ -16,8 +16,8 @@ function Root() {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Root />
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>,
 )

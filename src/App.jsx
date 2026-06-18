@@ -13,11 +13,11 @@ function App() {
     // Only force user back to the welcome screen on the VERY FIRST load/hard refresh.
     if (!hasLoadedList.current) {
       hasLoadedList.current = true
-      if (window.location.pathname !== '/') {
+      if (location.pathname !== '/') {
         navigate('/')
       }
     }
-  }, [navigate])
+  }, [navigate, location.pathname])
 
   return (
     <>

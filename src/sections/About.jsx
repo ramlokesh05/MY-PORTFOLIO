@@ -7,6 +7,14 @@ export default function About() {
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' })
   const [grayscaleVal, setGrayscaleVal] = useState(100)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     const scrollParent = sectionRef.current?.closest('.overflow-y-auto')
@@ -73,10 +81,10 @@ export default function About() {
             imageSrc="/profile.jpg"
             altText="Ram Lokesh"
             captionText="Ram Lokesh | Engineer"
-            containerHeight="380px"
-            containerWidth="280px"
-            imageHeight="380px"
-            imageWidth="280px"
+            containerHeight={isMobile ? "300px" : "380px"}
+            containerWidth={isMobile ? "220px" : "280px"}
+            imageHeight={isMobile ? "300px" : "380px"}
+            imageWidth={isMobile ? "220px" : "280px"}
             rotateAmplitude={12}
             scaleOnHover={1.05}
             showMobileWarning={false}

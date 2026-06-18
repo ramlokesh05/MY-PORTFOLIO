@@ -173,6 +173,15 @@ export default function Certifications() {
 
   const [selectedCert, setSelectedCert] = useState(certData[0])
   const [activeSubIndex, setActiveSubIndex] = useState(0)
+  const [modalOpen, setModalOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 1024)
+    const handleResize = () => setIsMobile(window.innerWidth < 1024)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const handlePrevSubCert = (e) => {
     e.stopPropagation()
@@ -226,6 +235,9 @@ export default function Certifications() {
                   onClick={() => {
                     setSelectedCert(cert)
                     setActiveSubIndex(0)
+                    if (isMobile) {
+                      setModalOpen(true);
+                    }
                   }}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={isSectionInView ? { opacity: 1, scale: 1 } : {}}
@@ -274,7 +286,7 @@ export default function Certifications() {
         </div>
 
         {/* Right Column: Certification Detail (2 cols) */}
-        <div className="lg:col-span-2 flex flex-col justify-between">
+        <div className="hidden lg:flex lg:col-span-2 flex-col justify-between">
           <div className="flex-1 flex flex-col min-h-[300px]">
             <AnimatePresence mode="wait">
               {selectedCert ? (
@@ -469,6 +481,180 @@ export default function Certifications() {
         </div>
 
       </div>
+
+      {/* Mobile Modal Overlay */}
+      <AnimatePresence>
+        {isMobile && modalOpen && selectedCert && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[600] flex items-center justify-center bg-black/85 px-4 backdrop-blur-sm"
+            onClick={() => setModalOpen(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="w-full max-w-md bg-[#0c0508] border border-white/10 p-6 rounded-2xl relative shadow-2xl overflow-y-auto max-h-[85vh] text-[var(--color-fg)] flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={() => setModalOpen(false)}
+                className="absolute top-4 right-4 text-white/50 hover:text-white text-base font-mono bg-transparent border-0 cursor-pointer z-40"
+              >
+                ✕
+              </button>
+
+              {(() => {
+                const activeSub = selectedCert.certificates[activeSubIndex] || selectedCert.certificates[0]
+                return (
+                  <>
+                    <div className="flex justify-between items-center mb-2 pr-6">
+                      <span className="font-mono text-[9px] text-[var(--color-red)] tracking-[0.25em] block text-transform uppercase font-bold">
+                        Credential Details
+                      </span>
+                      {selectedCert.certificates.length > 1 && (
+                        <span className="font-mono text-[9px] text-white/50 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                          {activeSubIndex + 1} of {selectedCert.certificates.length}
+                        </span>
+                      )}
+                    </div>
+                    
+                    <h3 className="font-wide text-[16px] text-[var(--color-fg)] font-bold mb-4 leading-tight">
+                      {activeSub.title}
+                    </h3>
+
+                    {/* Certificate image or layout */}
+                    <div className="border border-[rgba(255,255,255,0.1)] p-2 font-mono text-center flex flex-col justify-center items-center relative mb-4 overflow-hidden rounded-lg bg-black/40 min-h-[220px]">
+                      {activeSub.image ? (
+                        <div className="w-full h-full flex items-center justify-center relative p-2">
+                          <img
+                            src={activeSub.image}
+                            alt={activeSub.title}
+                            className="w-full h-auto max-h-[200px] object-contain rounded border border-white/10"
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-full h-full flex flex-col justify-between items-center p-4 relative overflow-hidden bg-gradient-to-br from-neutral-950/80 to-neutral-900/80 rounded border border-white/5 min-h-[200px] w-full">
+                          {/* Ambient Glow */}
+                          <div
+                            className="absolute -top-20 -right-20 w-36 h-36 rounded-full blur-[60px] opacity-20 pointer-events-none"
+                            style={{ backgroundColor: getBrandColor(selectedCert.id) }}
+                          />
+                          <div className="absolute inset-1.5 border border-white/5 rounded pointer-events-none" />
+
+                          <div className="w-full flex justify-between items-center z-10">
+                            <span className="font-mono text-[7px] text-white/40 tracking-[0.2em] uppercase">
+                              Digital Credential
+                            </span>
+                            <div className="opacity-75 scale-75">
+                              {getCertIcon(selectedCert.id)}
+                            </div>
+                          </div>
+
+                          <div className="text-center my-2 z-10 px-1 flex flex-col items-center">
+                            <span className="font-mono text-[6px] text-white/40 tracking-[0.25em] uppercase mb-1 block">
+                              Certificate of Achievement
+                            </span>
+                            <div className="w-8 h-[1px] bg-white/10 mb-1.5" />
+                            <h4 className="font-wide text-[10px] font-bold text-white tracking-wide mb-1.5">
+                              Karri Phaneendra Ram Lokesh
+                            </h4>
+                            <h3
+                              className="font-wide text-[9px] font-extrabold tracking-tight uppercase leading-snug max-w-[200px]"
+                              style={{ color: getBrandColor(selectedCert.id) }}
+                            >
+                              {activeSub.title}
+                            </h3>
+                            <p className="font-body text-[8px] text-white/60 max-w-[190px] leading-relaxed mt-2 italic">
+                              &ldquo;{activeSub.desc}&rdquo;
+                            </p>
+                          </div>
+
+                          <div className="w-full pt-1.5 border-t border-white/5 grid grid-cols-2 gap-2 text-left text-[7px] font-mono z-10 opacity-70">
+                            <div>
+                              <span className="text-white/40 block text-[6px] uppercase tracking-wider mb-0.5">Issuer</span>
+                              <span className="font-bold text-white/80">{selectedCert.issuer}</span>
+                            </div>
+                            <div className="text-right">
+                              <span className="text-white/40 block text-[6px] uppercase tracking-wider mb-0.5">Date Issued</span>
+                              <span className="font-bold text-white/80">{activeSub.date}</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Carousel Arrow Controls */}
+                      {selectedCert.certificates.length > 1 && (
+                        <>
+                          <button
+                            type="button"
+                            onClick={handlePrevSubCert}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-black/80 text-white border border-white/10 flex items-center justify-center hover:bg-[var(--color-red)] cursor-pointer"
+                          >
+                            ❮
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleNextSubCert}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-black/80 text-white border border-white/10 flex items-center justify-center hover:bg-[var(--color-red)] cursor-pointer"
+                          >
+                            ❯
+                          </button>
+                          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-30 bg-black/70 px-2 py-0.5 rounded-full border border-white/5">
+                            {selectedCert.certificates.map((_, idx) => (
+                              <span
+                                key={idx}
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  setActiveSubIndex(idx)
+                                }}
+                                className={`w-1.5 h-1.5 rounded-full cursor-pointer transition-all duration-200 ${idx === activeSubIndex ? 'bg-[var(--color-red)] scale-125' : 'bg-white/30'}`}
+                              />
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+
+                    <div className="mt-1 font-mono text-[9px] text-[var(--color-fg)] opacity-60 text-center uppercase tracking-wider">
+                      Verification ID: {activeSub.verifyId}
+                    </div>
+
+                    <div className="mt-4 flex justify-center gap-4">
+                      {activeSub.verifyUrl && (
+                        <a
+                          href={activeSub.verifyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-10 h-10 flex items-center justify-center bg-[var(--color-red)] rounded-lg text-white font-bold hover:scale-105 active:scale-95 transition-transform"
+                          title="Verify Credential"
+                        >
+                          <FaExternalLinkAlt size={14} />
+                        </a>
+                      )}
+                      <a
+                        href={activeSub.image || '#'}
+                        download={activeSub.image ? `${activeSub.title.toLowerCase().replace(/\s+/g, '-')}-certificate.png` : undefined}
+                        onClick={(e) => {
+                          if (!activeSub.image) e.preventDefault()
+                        }}
+                        className={`w-10 h-10 flex items-center justify-center rounded-lg text-white font-bold transition-transform ${activeSub.image ? 'bg-neutral-800 border border-white/10 hover:scale-105 active:scale-95' : 'bg-neutral-900/50 text-white/20 border border-white/5 cursor-not-allowed'}`}
+                        title="Download Certificate"
+                      >
+                        <FaDownload size={14} />
+                      </a>
+                    </div>
+                  </>
+                )
+              })()}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   )

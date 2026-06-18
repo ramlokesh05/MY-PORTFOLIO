@@ -31,6 +31,14 @@ const FOLDERS = [
 
 export default function HomePage() {
   const [activeIdx, setActiveIdx] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768)
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     const scrollContainers = document.querySelectorAll('.no-scrollbar, .overflow-y-auto')
@@ -55,7 +63,7 @@ export default function HomePage() {
           >
             {/* LOKESH Center Line - Absolutely Centered */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full flex flex-col items-center justify-center pointer-events-none drop-shadow-lg">
-              <div style={{ position: 'relative', width: '100%', maxWidth: '1120px', height: '220px', pointerEvents: 'auto' }}>
+              <div style={{ position: 'relative', width: '100%', maxWidth: '1120px', height: isMobile ? '120px' : '220px', pointerEvents: 'auto' }}>
                 <TextPressure
                   text="RAM LOKESH"
                   flex={false}
@@ -66,7 +74,7 @@ export default function HomePage() {
                   italic
                   textColor="#ffffff"
                   strokeColor="#ff102a"
-                  minFontSize={64}
+                  minFontSize={isMobile ? 32 : 64}
                 />
               </div>
 
@@ -76,20 +84,19 @@ export default function HomePage() {
                   width: '48px',
                   height: '2px',
                   background: 'var(--color-red)',
-                  marginTop: '2.5rem',
+                  marginTop: isMobile ? '1.2rem' : '2.5rem',
                 }}
               />
 
               {/* Sub-text - repositioned under red line */}
               <p
-                className="font-mono text-center pointer-events-auto"
+                className="font-mono text-center pointer-events-auto text-[var(--color-fg)]"
                 style={{
-                  fontSize: '11px',
+                  fontSize: isMobile ? '9px' : '11px',
                   letterSpacing: '0.18em',
                   lineHeight: 2,
-                  maxWidth: '380px',
-                  marginTop: '2.5rem',
-                  color: 'var(--color-fg)',
+                  maxWidth: isMobile ? '290px' : '380px',
+                  marginTop: isMobile ? '1.2rem' : '2.5rem',
                   opacity: 0.9,
                 }}
               >
@@ -98,7 +105,7 @@ export default function HomePage() {
               </p>
 
               {/* Profile Social Buttons (Logos Only) */}
-              <div className="flex gap-6 mt-8 pointer-events-auto z-20">
+              <div className="flex gap-6 pointer-events-auto z-20" style={{ marginTop: isMobile ? '1.5rem' : '2rem' }}>
                 <a
                   href="https://www.linkedin.com/in/ramlokesh05/"
                   target="_blank"
@@ -142,7 +149,7 @@ export default function HomePage() {
               </div>
 
               {/* Button - spaced equally */}
-              <div style={{ marginTop: '2.5rem' }} className="pointer-events-auto">
+              <div style={{ marginTop: isMobile ? '1.5rem' : '2.5rem' }} className="pointer-events-auto">
                 <StarBorder
                   as="button"
                   color="#ff102a"
@@ -365,9 +372,9 @@ export default function HomePage() {
             { icon: <VscWorkspaceTrusted size={18} />, label: 'Certs', onClick: () => goTo(5) },
             { icon: <VscMail size={18} />, label: 'Contact', onClick: () => goTo(6) },
           ]}
-          panelHeight={68}
-          baseItemSize={50}
-          magnification={70}
+          panelHeight={isMobile ? 52 : 68}
+          baseItemSize={isMobile ? 36 : 50}
+          magnification={isMobile ? 52 : 70}
         />
 
       </div>

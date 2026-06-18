@@ -71,3 +71,10 @@
   height: 100%;
   color: #fff;
 }
+
+@media (max-width: 767px) {
+  .dock-panel {
+    gap: 6px !important;
+    padding: 6px 10px !important;
+  }
+}

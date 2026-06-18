@@ -69,46 +69,48 @@ export default function Skills() {
       <div className="grid lg:grid-cols-5 gap-8 items-stretch w-full text-left">
         
         {/* Left Column: Categories List (2 cols) */}
-        <div className="lg:col-span-2 flex flex-col gap-4">
-          <div className="font-mono text-[10px] mb-2 px-1 text-[var(--color-fg)] opacity-70 uppercase tracking-widest">
+        <div className="lg:col-span-2 flex flex-col gap-2">
+          <div className="font-mono text-[10px] mb-2 px-1 text-[var(--color-fg)] opacity-70 uppercase tracking-widest select-none">
             Select Category
           </div>
-
-          {skillGroups.map((group, idx) => {
-            const isSelected = selectedGroup?.id === group.id
-            return (
-              <motion.div
-                key={group.id}
-                onClick={() => setSelectedGroup(group)}
-                initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.5, delay: idx * 0.1, ease: "easeOut" }}
-                style={{
-                  borderRadius: '12px',
-                  background: isSelected ? 'rgba(255,80,5,0.08)' : 'rgba(10,4,6,0.52)',
-                  borderColor: isSelected ? 'var(--color-red)' : 'rgba(255,255,255,0.1)',
-                  backdropFilter: 'blur(20px)'
-                }}
-                className={`border p-5 cursor-pointer transition-all duration-300 group ${
-                  isSelected ? 'border-[var(--color-red)] scale-[1.02]' : 'hover:border-[rgba(255,80,5,0.5)]'
-                }`}
-              >
-                <div className="flex justify-between items-center mb-1">
-                  <h3 className={`font-wide text-lg font-bold tracking-wide transition-colors duration-300 ${
-                    isSelected ? 'text-[var(--color-red)]' : 'text-[var(--color-fg)] group-hover:text-[var(--color-red)]'
-                  }`}>
-                    {group.title}
-                  </h3>
-                  {isSelected && (
-                    <motion.div layoutId="indicator" className="w-2 h-2 rounded-full bg-[var(--color-red)]" />
-                  )}
-                </div>
-                <p className="font-mono text-[10px] text-[var(--color-fg)] opacity-60 uppercase tracking-wider">
-                  {group.subtitle}
-                </p>
-              </motion.div>
-            )
-          })}
+          
+          <div className="flex flex-row lg:flex-col overflow-x-auto lg:overflow-x-visible gap-4 pb-4 lg:pb-0 scrollbar-none no-scrollbar w-full">
+            {skillGroups.map((group, idx) => {
+              const isSelected = selectedGroup?.id === group.id
+              return (
+                <motion.div
+                  key={group.id}
+                  onClick={() => setSelectedGroup(group)}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.5, delay: idx * 0.1, ease: "easeOut" }}
+                  style={{
+                    borderRadius: '12px',
+                    background: isSelected ? 'rgba(255,80,5,0.08)' : 'rgba(10,4,6,0.52)',
+                    borderColor: isSelected ? 'var(--color-red)' : 'rgba(255,255,255,0.1)',
+                    backdropFilter: 'blur(20px)'
+                  }}
+                  className={`border p-4 lg:p-5 cursor-pointer transition-all duration-300 group flex-shrink-0 w-[260px] lg:w-auto ${
+                    isSelected ? 'border-[var(--color-red)] scale-[1.02]' : 'hover:border-[rgba(255,80,5,0.5)]'
+                  }`}
+                >
+                  <div className="flex justify-between items-center mb-1">
+                    <h3 className={`font-wide text-base lg:text-lg font-bold tracking-wide transition-colors duration-300 ${
+                      isSelected ? 'text-[var(--color-red)]' : 'text-[var(--color-fg)] group-hover:text-[var(--color-red)]'
+                    }`}>
+                      {group.title}
+                    </h3>
+                    {isSelected && (
+                      <motion.div layoutId="indicator" className="w-2 h-2 rounded-full bg-[var(--color-red)] flex-shrink-0" />
+                    )}
+                  </div>
+                  <p className="font-mono text-[9px] lg:text-[10px] text-[var(--color-fg)] opacity-60 uppercase tracking-wider">
+                    {group.subtitle}
+                  </p>
+                </motion.div>
+              )
+            })}
+          </div>
         </div>
 
         {/* Right Column: Skills Showcase (3 cols) */}

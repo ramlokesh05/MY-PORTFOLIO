@@ -152,7 +152,7 @@ export default function Projects() {
           </div>
 
           {/* RIGHT PANELS (Editor Workspace & App Live Preview) */}
-          <div className="flex-1 flex flex-col lg:flex-row divide-y lg:divide-y-0 lg:divide-x divide-white/10 bg-black/10 lg:h-full">
+          <div className="flex-1 flex flex-col-reverse lg:flex-row divide-y divide-y-reverse lg:divide-y-0 lg:divide-x divide-white/10 bg-black/10 lg:h-full">
             
             {/* COLUMN 1: Code editor editor area */}
             <div className="flex-1 flex flex-col min-w-0 lg:h-full">
