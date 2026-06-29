@@ -92,58 +92,14 @@ export default function Certifications() {
           verifyUrl: 'https://catalog-education.oracle.com/pls/certview/sharebadge?id=964782A83E3E208B41B1173ABD3ED0AA7C2915E69925135BACB9357487747F72',
           image: '/images/oracle-ai-certificate.png',
           desc: 'Demonstrated fundamental understanding of Artificial Intelligence (AI) and Machine Learning (ML) concepts and how they are implemented within Oracle Cloud Infrastructure (OCI).'
-        },
-        {
-          title: 'Oracle Data Platform 2025 Certified Foundations Associate',
-          date: "Mar'26",
-          verifyId: '103440761OCI25DCFA',
-          verifyUrl: 'https://catalog-education.oracle.com/pls/certview/sharebadge?id=FA0B6C5A550EDF11857C67D88B963C70C3D80E90848E84D1987D7F6213D5475E',
-          image: '/images/oracle-data-platform-certificate.png',
-          desc: 'Demonstrated foundational knowledge of Oracle Data Platform services, data management design, data warehouse integration, and cloud databases.'
-        }
-      ]
-    },
-    {
-      id: 'mongodb',
-      code: 'CERT-03',
-      issuer: 'MongoDB',
-      certificates: [
-        {
-          title: 'MongoDB Associate',
-          date: "Jan'26",
-          verifyId: 'MDB-AD-99120',
-          verifyUrl: 'https://university.mongodb.com/',
-          desc: 'Document modeling, index optimizations, aggregation frameworks, and cluster replication setup.'
-        }
-      ]
-    },
-    {
-      id: 'github',
-      code: 'CERT-04',
-      issuer: 'GitHub',
-      certificates: [
-        {
-          title: 'GitHub Foundations',
-          date: "Feb'26",
-          verifyId: 'GH-FND-88402',
-          verifyUrl: 'https://github.com/ramlokesh05',
-          desc: 'Branch protection rules, GitHub Actions pipeline design, repository governance, and secure release tagging.'
         }
       ]
     },
     {
       id: 'dsa',
-      code: 'CERT-05',
+      code: 'CERT-03',
       issuer: 'Cipher Schools',
       certificates: [
-        {
-          title: 'Data Structures and Algorithms',
-          date: "Aug'25",
-          verifyId: 'CSW2025-13429',
-          verifyUrl: 'https://www.cipherschools.com/certificate/preview?id=68921d7dcec61f8eee566987',
-          image: '/images/dsa-certificate.png',
-          desc: 'Advanced data structures, graph search algorithms, dynamic programming, and complexity mapping in C++.'
-        },
         {
           title: 'Git and GitHub',
           date: "Jun'25",
@@ -151,21 +107,14 @@ export default function Certifications() {
           verifyUrl: 'https://www.cipherschools.com/certificate/preview?id=684b03194f9ff73e6af313af',
           image: '/images/cipher-git-certificate.png',
           desc: 'Comprehensive training in Git and GitHub, version control systems, branch management, and collaborative development workflows.'
-        }
-      ]
-    },
-    {
-      id: 'nptel',
-      code: 'CERT-06',
-      issuer: 'NPTEL (IIT Madras)',
-      certificates: [
+        },
         {
-          title: 'Social Networks',
-          date: "Oct'25",
-          verifyId: 'NPTEL25CS65S647501090',
-          verifyUrl: '/images/nptel-certificate.png',
-          image: '/images/nptel-certificate.png',
-          desc: 'Analysis of relation networks, graph hubs, centrality distribution models, and structural link predictions.'
+          title: 'Data Structures and Algorithms',
+          date: "Aug'25",
+          verifyId: 'CSW2025-13429',
+          verifyUrl: 'https://www.cipherschools.com/certificate/preview?id=68921d7dcec61f8eee566987',
+          image: '/images/dsa-certificate.png',
+          desc: 'Advanced data structures, graph search algorithms, dynamic programming, and complexity mapping in C++.'
         }
       ]
     }

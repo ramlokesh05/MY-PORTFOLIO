@@ -10,39 +10,20 @@ export default function Skills() {
   const skillGroups = [
     {
       id: 'programming',
-      title: 'Languages I Copy-Paste From StackOverflow',
+      title: 'Languages I Actually Code In',
       subtitle: 'Code I Write That (Mostly) Compiles',
-      skills: ['C', 'C++', 'Java', 'Python', 'DSA', 'HTML & CSS', 'React.js', 'Node.js', 'Express.js', 'MERN Stack']
-    },
-    {
-      id: 'technologies',
-      title: "Stuff I Should've Paid Attention To In Class",
-      subtitle: 'Systems and Architecture Concepts',
-      skills: ['DBMS (SQL / NoSQL)', 'Operating Systems', 'Computer Networks', 'DAA', 'System Design', 'REST APIs', 'Microservices']
+      skills: ['C', 'C++', 'Python', 'Java']
     },
     {
       id: 'tools',
-      title: "Tools That Let Me Say 'It Works On My Machine'",
-      subtitle: 'Infrastructure and Deployment Pipelines',
-      skills: [
-        'AWS (EC2, S3, RDS, VPC, IAM)', 
-        'Azure',
-        'GCP',
-        'Docker', 
-        'Kubernetes (EKS)', 
-        'Terraform (IaC)', 
-        'Ansible', 
-        'Jenkins', 
-        'Git & GitHub', 
-        'Prometheus & Grafana', 
-        'ELK Stack', 
-        'Linux / Bash Scripting'
-      ]
+      title: 'Tools & Platforms',
+      subtitle: 'Infrastructure, Databases, and Deployment Platforms',
+      skills: ['MongoDB', 'AWS', 'Docker', 'Azure', 'GCP', 'Kubernetes', 'Jenkins', 'GIT', 'Linux']
     },
     {
       id: 'softskills',
-      title: 'Human Compatibility Protocols',
-      subtitle: 'Non-Technical Executive Functions',
+      title: 'Soft Skills & Powers',
+      subtitle: 'Qualities That Make Me A Great Team Member',
       skills: ['Problem-Solving', 'Time Management', 'Leadership Abilities', 'Adaptability']
     }
   ]

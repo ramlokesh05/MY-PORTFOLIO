@@ -10,18 +10,18 @@ export default function Projects() {
     {
       id: 'devops',
       code: 'PRJ-01',
-      title: 'DevOps Learning Platform',
+      title: 'DevOps Learning Portal',
       subtitle: 'AI-Integrated Learning Portal',
       fileName: 'DevOpsLearn.json',
-      description: 'An AI-integrated interactive learning platform with a markdown note board, customized quizzes, hands-on practicals, and bite-sized modular guides.',
+      description: 'A full stack AI-powered DevOps learning portal designed for students to learn and practice core DevOps concepts through interactive modules and practical workflows.',
       complexity: 'High',
-      tags: ['React', 'AI Integration', 'Interactive Board', 'Quizzes', 'MERN Stack'],
+      tags: ['React', 'Node.js', 'Express.js', 'Azure', 'Docker', 'Jenkins', 'Maven', 'AI Integration'],
       github: 'https://github.com/ramlokesh05/DevOps-Learning-Portal-.git',
       live: 'https://devopslearn.vercel.app',
       image: '/images/ai_deadlock_detector.png',
       renderCode: () => (
         <div className="flex flex-col font-mono text-[10px] md:text-xs leading-relaxed text-white/80 p-2">
-          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">1</span><span className="text-slate-500">PRJ-01: DevOps Learning Platform</span></div>
+          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">1</span><span className="text-slate-500">PRJ-01: DevOps Learning Portal</span></div>
           <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">2</span><span className="text-amber-500">{"{"}</span></div>
           <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">3</span><span>  <span className="text-sky-400">"status"</span>: <span className="text-emerald-400">"continuous-deployment-success"</span>,</span></div>
           <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">4</span><span>  <span className="text-sky-400">"ai_integration"</span>: <span className="text-emerald-400">"active-tutor-agent"</span>,</span></div>
@@ -38,14 +38,14 @@ export default function Projects() {
       )
     },
     {
-      id: 'expensetracker',
+      id: 'expense-tracker',
       code: 'PRJ-02',
       title: 'Expense Tracker GUI',
-      subtitle: 'Finance & AI Analytics Platform',
+      subtitle: 'Full Stack Expense Tracker',
       fileName: 'ExpenseTracker.json',
-      description: 'Created a full stack expense tracker with a user-friendly GUI for managing daily expenses, powered by AI analytics, secure MERN backend storage, and real-time updates.',
+      description: 'A full stack expense tracker with a user-friendly GUI for managing daily expenses and financial records. Built with React, Node.js, Express.js, and MongoDB.',
       complexity: 'Medium',
-      tags: ['React', 'Node.js', 'Express', 'MongoDB', 'AI Analytics'],
+      tags: ['React', 'Node.js', 'Express.js', 'MongoDB', 'HTML', 'CSS', 'JavaScript'],
       github: 'https://github.com/ramlokesh05',
       live: '#',
       image: '/images/student-management.jpg',
@@ -53,14 +53,15 @@ export default function Projects() {
         <div className="flex flex-col font-mono text-[10px] md:text-xs leading-relaxed text-white/80 p-2">
           <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">1</span><span className="text-slate-500">PRJ-02: Expense Tracker GUI</span></div>
           <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">2</span><span className="text-amber-500">{"{"}</span></div>
-          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">3</span><span>  <span className="text-sky-400">"status"</span>: <span className="text-emerald-400">"production-success"</span>,</span></div>
-          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">4</span><span>  <span className="text-sky-400">"features"</span>: <span className="text-amber-500">[</span></span></div>
-          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">5</span><span>    <span className="text-emerald-400">"AI-powered financial insights"</span>,</span></div>
-          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">6</span><span>    <span className="text-emerald-400">"Real-time expense log updates"</span>,</span></div>
-          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">7</span><span>    <span className="text-emerald-400">"Secure token authentication"</span></span></div>
-          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">8</span><span>  <span className="text-amber-500">]</span>,</span></div>
-          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">9</span><span>  <span className="text-sky-400">"database"</span>: <span className="text-emerald-400">"MongoDB Atlas"</span></span></div>
-          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">10</span><span className="text-amber-500">{"}"}</span></div>
+          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">3</span><span>  <span className="text-sky-400">"status"</span>: <span className="text-emerald-400">"production-ready"</span>,</span></div>
+          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">4</span><span>  <span className="text-sky-400">"database"</span>: <span className="text-emerald-400">"MongoDB-Atlas"</span>,</span></div>
+          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">5</span><span>  <span className="text-sky-400">"features"</span>: <span className="text-amber-500">[</span></span></div>
+          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">6</span><span>    <span className="text-emerald-400">"Real-time Updates"</span>,</span></div>
+          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">7</span><span>    <span className="text-emerald-400">"Secure JWT Authentication"</span>,</span></div>
+          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">8</span><span>    <span className="text-emerald-400">"AI-powered Financial Analytics"</span></span></div>
+          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">9</span><span>  <span className="text-amber-500">]</span>,</span></div>
+          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">10</span><span>  <span className="text-sky-400">"responsiveness"</span>: <span className="text-emerald-400">"mobile-first-design"</span></span></div>
+          <div className="flex"><span className="w-8 text-white/20 text-right pr-3 mr-3 border-r border-white/5 select-none">11</span><span className="text-amber-500">{"}"}</span></div>
         </div>
       )
     }

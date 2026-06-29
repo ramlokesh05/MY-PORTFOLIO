@@ -102,92 +102,24 @@ export default function About() {
         >
           <p className="font-body text-base md:text-lg text-[var(--color-fg)] leading-relaxed mb-8 opacity-90">
             I am a Computer Science Engineering student specializing in{" "}
-            <span className="text-[var(--color-red)] font-bold tracking-wide whitespace-nowrap">Cloud Computing</span>{" "}
-            and{" "}
+            <span className="text-[var(--color-red)] font-bold tracking-wide whitespace-nowrap">Cloud Computing</span>,{" "}
             <span className="text-[var(--color-red)] font-bold tracking-wide">DevOps</span>{" "}
-            orchestration. My focus lies in building scalable architectures, automating CI/CD pipelines, and writing robust infrastructure as code.
+            orchestration, and backend API development. Previously, I worked as a Software Engineer at{" "}
+            <span className="text-[var(--color-red)] font-bold tracking-wide">Syncgaze</span>.
           </p>
 
           <div className="flex flex-wrap justify-center md:justify-start gap-8 md:gap-12 w-full mt-4">
             <div className="flex flex-col items-center md:items-start">
               <span className="font-mono text-2xl md:text-3xl font-bold text-[var(--color-fg)]">2027</span>
-              <span className="font-mono text-[9px] tracking-widest text-[var(--color-red)] uppercase mt-2">Graduation</span>
+              <span className="font-mono text-[9px] tracking-widest text-[var(--color-red)] uppercase mt-2">Graduation (Hopefully)</span>
             </div>
             <div className="flex flex-col items-center md:items-start">
-              <span className="font-mono text-2xl md:text-3xl font-bold text-[var(--color-fg)]">6+</span>
-              <span className="font-mono text-[9px] tracking-widest text-[var(--color-red)] uppercase mt-2">Months of Experience</span>
+              <span className="font-mono text-2xl md:text-3xl font-bold text-[var(--color-fg)]">6</span>
+              <span className="font-mono text-[9px] tracking-widest text-[var(--color-red)] uppercase mt-2">Months at Syncgaze</span>
             </div>
             <div className="flex flex-col items-center md:items-start">
               <span className="font-mono text-2xl md:text-3xl font-bold text-[var(--color-fg)]">5</span>
-              <span className="font-mono text-[9px] tracking-widest text-[var(--color-red)] uppercase mt-2">Shiny Badges</span>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Experience & Achievements Row */}
-      <div className="grid md:grid-cols-2 gap-12 w-full mt-16 text-left border-t border-white/10 pt-12">
-        {/* Experience Panel */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-        >
-          <h3 className="font-wide text-lg font-bold text-[var(--color-red)] uppercase tracking-wider mb-6">
-            Work Experience
-          </h3>
-          <div className="relative border-l border-white/10 pl-6 ml-2 space-y-8">
-            <div className="relative">
-              {/* Bullet Node */}
-              <div className="absolute -left-[31px] top-1.5 w-2 h-2 rounded-full bg-[var(--color-red)] shadow-[0_0_8px_rgba(255,16,42,0.8)]" />
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h4 className="font-wide font-bold text-white text-base leading-snug">Software Engineer</h4>
-                  <p className="font-mono text-xs text-white/50">Syncgaze</p>
-                </div>
-                <span className="font-mono text-[10px] bg-white/5 border border-white/10 px-2 py-0.5 rounded text-white/60">
-                  Oct'25 — Mar'26
-                </span>
-              </div>
-              <ul className="space-y-1.5 list-disc pl-4 text-xs text-white/70 font-body leading-relaxed">
-                <li>Managed and optimized backend APIs using Node.js and Express.js, ensuring secure data processing and server performance.</li>
-                <li>Worked with the frontend team to connect APIs, improving response time and reliability.</li>
-                <li>Contributed to the successful delivery of a client-focused car rental management platform within a startup environment.</li>
-              </ul>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Achievements & Training Panel */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-        >
-          <h3 className="font-wide text-lg font-bold text-[var(--color-red)] uppercase tracking-wider mb-6">
-            Achievements & Training
-          </h3>
-          <div className="space-y-6">
-            <div>
-              <h4 className="font-wide font-bold text-white text-sm">Cipher Schools — Data Structures & Algorithms</h4>
-              <p className="font-mono text-[10px] text-white/40 mb-1.5">Training | Jun'25 — Jul'25</p>
-              <p className="text-xs text-white/70 pl-2 border-l border-[var(--color-red)]/30">
-                Built a foundation in C++ DSA, solving 100+ algorithmic problems to boost time & space complexity by up to 40%.
-              </p>
-            </div>
-            <div className="space-y-3 pt-2">
-              <div className="flex items-start gap-2 text-xs text-white/75">
-                <span className="text-[var(--color-red)] mt-0.5">🏆</span>
-                <span>Secured 6th place in the Nationwide IIT Ai Imagen Hackathon finals among 800 teams.</span>
-              </div>
-              <div className="flex items-start gap-2 text-xs text-white/75">
-                <span className="text-[var(--color-red)] mt-0.5">🏆</span>
-                <span>Achieved 4th place among 600 contestants in the Zerodha Varsity Finance Quiz.</span>
-              </div>
-              <div className="flex items-start gap-2 text-xs text-white/75">
-                <span className="text-[var(--color-red)] mt-0.5">🛡️</span>
-                <span>Successfully coordinated the cybersecurity workshop "HACKETHICS" at Lovely Professional University.</span>
-              </div>
+              <span className="font-mono text-[9px] tracking-widest text-[var(--color-red)] uppercase mt-2">Certifications</span>
             </div>
           </div>
         </motion.div>
