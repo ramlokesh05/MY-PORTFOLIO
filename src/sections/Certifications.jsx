@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import StarBorder from '../components/StarBorder'
 import { SiGithub, SiMongodb, SiCplusplus } from 'react-icons/si'
@@ -240,7 +240,7 @@ export default function Certifications() {
                     }
                   }}
                   initial={{ opacity: 0, scale: 0.9 }}
-                  animate={isSectionInView ? { opacity: 1, scale: 1 } : {}}
+                  animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.3, delay: idx * 0.06 }}
                   color={isSelected ? "#ff102a" : "transparent"}
                   speed="3s"

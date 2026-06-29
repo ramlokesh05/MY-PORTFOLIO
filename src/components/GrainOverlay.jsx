@@ -1,66 +1,70 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
 function AnimatedGrain() {
-  const canvasRef = useRef(null)
-  const rafRef = useRef(null)
+  const [noiseUrl, setNoiseUrl] = useState('')
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
+    // Generate a single 128x128 noise pattern once on mount
+    const canvas = document.createElement('canvas')
+    canvas.width = 128
+    canvas.height = 128
     const ctx = canvas.getContext('2d')
-    let w, h
+    const imageData = ctx.createImageData(128, 128)
+    const data = imageData.data
 
-    const resize = () => {
-      w = canvas.width = window.innerWidth
-      h = canvas.height = window.innerHeight
+    for (let i = 0; i < data.length; i += 4) {
+      const r = Math.random()
+      const v = r < 0.5 ? 0 : (r < 0.8 ? 128 : 255)
+      data[i] = v       // R
+      data[i+1] = v     // G
+      data[i+2] = v     // B
+      data[i+3] = r < 0.5 ? 0 : Math.floor(r * 45) // Alpha — sparse
     }
-    resize()
-    window.addEventListener('resize', resize)
-
-    let frame = 0
-    const FPS_LIMIT = 24
-    let lastTime = 0
-
-    const draw = (ts) => {
-      rafRef.current = requestAnimationFrame(draw)
-      const elapsed = ts - lastTime
-      if (elapsed < 1000 / FPS_LIMIT) return
-      lastTime = ts
-
-      frame++
-      const imageData = ctx.createImageData(w, h)
-      const data = imageData.data
-      const seed = frame * 6791
-
-      for (let i = 0; i < data.length; i += 4) {
-        // Fast pseudo-random using seed variation per frame
-        const r = Math.random()
-        const v = r < 0.5 ? 0 : (r < 0.8 ? 128 : 255)
-        data[i] = v       // R
-        data[i+1] = v     // G
-        data[i+2] = v     // B
-        data[i+3] = r < 0.6 ? 0 : Math.floor(r * 60) // Alpha — sparse
-      }
-      ctx.putImageData(imageData, 0, 0)
-    }
-
-    rafRef.current = requestAnimationFrame(draw)
-
-    return () => {
-      cancelAnimationFrame(rafRef.current)
-      window.removeEventListener('resize', resize)
-    }
+    ctx.putImageData(imageData, 0, 0)
+    setNoiseUrl(canvas.toDataURL())
   }, [])
+
+  if (!noiseUrl) return null
 
   return (
     <>
-      {/* Animated canvas grain */}
-      <canvas
-        ref={canvasRef}
-        id="grain-canvas"
+      {/* GPU-animated repeating noise overlay */}
+      <div
+        id="grain-overlay"
         aria-hidden="true"
-        style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 9999, opacity: 0.045, mixBlendMode: 'overlay' }}
+        style={{
+          position: 'fixed',
+          top: '-50%',
+          left: '-50%',
+          right: '-50%',
+          bottom: '-50%',
+          width: '200%',
+          height: '200%',
+          background: `url(${noiseUrl}) repeat`,
+          opacity: 0.05,
+          zIndex: 9999,
+          pointerEvents: 'none',
+          mixBlendMode: 'overlay',
+          animation: 'noise-animation 0.2s steps(4) infinite',
+          willChange: 'transform'
+        }}
       />
+      {/* Inject styling for GPU acceleration keyframes */}
+      <style>{`
+        @keyframes noise-animation {
+          0% { transform: translate(0, 0); }
+          10% { transform: translate(-1%, -2%); }
+          20% { transform: translate(-2%, 1%); }
+          30% { transform: translate(1%, -2%); }
+          40% { transform: translate(-1%, 3%); }
+          50% { transform: translate(-2%, 1%); }
+          60% { transform: translate(3%, 0); }
+          70% { transform: translate(0, 2%); }
+          80% { transform: translate(2%, 1%); }
+          90% { transform: translate(-1%, 1%); }
+          100% { transform: translate(0, 0); }
+        }
+      `}</style>
       {/* Vignette */}
       <div
         aria-hidden="true"

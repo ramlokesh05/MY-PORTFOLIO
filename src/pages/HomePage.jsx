@@ -63,7 +63,7 @@ export default function HomePage() {
           >
             {/* LOKESH Center Line - Absolutely Centered */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-full flex flex-col items-center justify-center pointer-events-none drop-shadow-lg">
-              <div style={{ position: 'relative', width: '100%', maxWidth: '1120px', height: isMobile ? '120px' : '220px', pointerEvents: 'auto' }}>
+              <div style={{ position: 'relative', width: '100%', maxWidth: '1120px', height: isMobile ? '100px' : '180px', pointerEvents: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <TextPressure
                   text="RAM LOKESH"
                   flex={false}
@@ -84,7 +84,7 @@ export default function HomePage() {
                   width: '48px',
                   height: '2px',
                   background: 'var(--color-red)',
-                  marginTop: isMobile ? '1.2rem' : '2.5rem',
+                  marginTop: isMobile ? '0.4rem' : '0.8rem',
                 }}
               />
 

@@ -25,8 +25,8 @@ const debounce = (func, delay) => {
 
 const TextPressure = ({
   text = 'Compressa',
-  fontFamily = 'Compressa VF',
-  fontUrl = 'https://res.cloudinary.com/dr6lvwubh/raw/upload/v1529908256/CompressaPRO-GX.woff2',
+  fontFamily = 'Anybody',
+  fontUrl = '',
 
   width = true,
   weight = true,
@@ -49,6 +49,8 @@ const TextPressure = ({
 
   const mouseRef = useRef({ x: 0, y: 0 });
   const cursorRef = useRef({ x: 0, y: 0 });
+  const charCentersRef = useRef([]);
+  const layoutCacheRef = useRef({ maxDist: 0, needsRecalculate: true });
 
   const [fontSize, setFontSize] = useState(minFontSize);
   const [scaleY, setScaleY] = useState(1);
@@ -89,7 +91,7 @@ const TextPressure = ({
 
     const { width: containerW, height: containerH } = containerRef.current.getBoundingClientRect();
 
-    let newFontSize = containerW / (chars.length / 2);
+    let newFontSize = containerW / (chars.length * 0.85);
     newFontSize = Math.max(newFontSize, minFontSize);
 
     setFontSize(newFontSize);
@@ -111,37 +113,70 @@ const TextPressure = ({
   useEffect(() => {
     const debouncedSetSize = debounce(setSize, 100);
     debouncedSetSize();
-    window.addEventListener('resize', debouncedSetSize);
-    return () => window.removeEventListener('resize', debouncedSetSize);
+    const handleResize = () => {
+      debouncedSetSize();
+      layoutCacheRef.current.needsRecalculate = true;
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [setSize]);
 
   useEffect(() => {
     let rafId;
+    let hasSettled = false;
+
     const animate = () => {
-      mouseRef.current.x += (cursorRef.current.x - mouseRef.current.x) / 15;
-      mouseRef.current.y += (cursorRef.current.y - mouseRef.current.y) / 15;
+      const dx = cursorRef.current.x - mouseRef.current.x;
+      const dy = cursorRef.current.y - mouseRef.current.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance > 0.05) {
+        mouseRef.current.x += dx / 15;
+        mouseRef.current.y += dy / 15;
+        hasSettled = false;
+      } else if (!hasSettled) {
+        mouseRef.current.x = cursorRef.current.x;
+        mouseRef.current.y = cursorRef.current.y;
+        hasSettled = true;
+      } else {
+        // Already settled, skip execution to save CPU/GPU cycles
+        rafId = requestAnimationFrame(animate);
+        return;
+      }
 
       if (titleRef.current) {
-        const titleRect = titleRef.current.getBoundingClientRect();
-        const maxDist = titleRect.width / 2;
+        if (layoutCacheRef.current.needsRecalculate) {
+          const titleRect = titleRef.current.getBoundingClientRect();
+          layoutCacheRef.current.maxDist = titleRect.width / 2;
+          spansRef.current.forEach((span, i) => {
+            if (!span) return;
+            const rect = span.getBoundingClientRect();
+            charCentersRef.current[i] = {
+              x: rect.x + rect.width / 2,
+              y: rect.y + rect.height / 2
+            };
+          });
+          layoutCacheRef.current.needsRecalculate = false;
+        }
 
-        spansRef.current.forEach(span => {
+        const maxDist = layoutCacheRef.current.maxDist;
+
+        spansRef.current.forEach((span, i) => {
           if (!span) return;
 
-          const rect = span.getBoundingClientRect();
-          const charCenter = {
-            x: rect.x + rect.width / 2,
-            y: rect.y + rect.height / 2
-          };
+          const charCenter = charCentersRef.current[i];
+          if (!charCenter) return;
 
           const d = dist(mouseRef.current, charCenter);
 
-          const wdth = width ? Math.floor(getAttr(d, maxDist, 5, 200)) : 100;
-          const wght = weight ? Math.floor(getAttr(d, maxDist, 100, 900)) : 400;
-          const italVal = italic ? getAttr(d, maxDist, 0, 1).toFixed(2) : 0;
+          // Anybody font supports: wdth 50..150, wght 100..900.
+          // Rest values are set to: wdth 80, wght 350 to look visible and nice when cursor is far.
+          // We pass range values to getAttr (wdth max range = 70 so 70 + 80 = 150; wght max range = 550 so 550 + 350 = 900).
+          const wdth = width ? Math.floor(getAttr(d, maxDist, 80, 70)) : 100;
+          const wght = weight ? Math.floor(getAttr(d, maxDist, 350, 550)) : 400;
           const alphaVal = alpha ? getAttr(d, maxDist, 0, 1).toFixed(2) : 1;
 
-          const newFontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}, 'ital' ${italVal}`;
+          const newFontVariationSettings = `'wght' ${wght}, 'wdth' ${wdth}`;
 
           if (span.style.fontVariationSettings !== newFontVariationSettings) {
             span.style.fontVariationSettings = newFontVariationSettings;
@@ -162,12 +197,6 @@ const TextPressure = ({
   const styleElement = useMemo(() => {
     return (
       <style>{`
-        @font-face {
-          font-family: '${fontFamily}';
-          src: url('${fontUrl}');
-          font-style: normal;
-        }
-
         .flex {
           display: flex;
           justify-content: space-between;
@@ -233,7 +262,9 @@ const TextPressure = ({
             data-char={char}
             style={{
               display: 'inline-block',
-              color: stroke ? undefined : textColor
+              color: stroke ? undefined : textColor,
+              textShadow: '0 0 20px rgba(255, 16, 42, 0.2)', // Adding a subtle brutalist glow
+              transition: 'font-variation-settings 0.1s ease-out'
             }}
           >
             {char}

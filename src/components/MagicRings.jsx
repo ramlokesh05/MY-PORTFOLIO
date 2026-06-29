@@ -156,7 +156,7 @@ export default function MagicRings({
     const resize = () => {
       const w = mount.clientWidth;
       const h = mount.clientHeight;
-      const dpr = Math.min(window.devicePixelRatio, 2);
+      const dpr = Math.min(window.devicePixelRatio, 1.5);
       renderer.setSize(w, h);
       renderer.setPixelRatio(dpr);
       uniforms.uResolution.value.set(w * dpr, h * dpr);
@@ -232,6 +232,7 @@ export default function MagicRings({
       mount.removeEventListener('click', onClick);
       mount.removeChild(renderer.domElement);
       renderer.dispose();
+      renderer.forceContextLoss();
       material.dispose();
     };
   }, []);

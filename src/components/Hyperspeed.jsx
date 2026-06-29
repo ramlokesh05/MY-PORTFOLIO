@@ -361,8 +361,16 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
           alpha: true
         });
         this.renderer.setSize(initW, initH, false);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.composer = new EffectComposer(this.renderer);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        
+        this.postprocessingFailed = false;
+        try {
+          this.composer = new EffectComposer(this.renderer);
+        } catch (e) {
+          console.warn("Composer initialization failed, falling back to standard rendering:", e);
+          this.postprocessingFailed = true;
+          this.composer = null;
+        }
         container.append(this.renderer.domElement);
 
         this.camera = new THREE.PerspectiveCamera(options.fov, initW / initH, 0.1, 10000);
@@ -432,38 +440,40 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
           return;
         }
 
-        this.renderer.setSize(width, height);
-        this.camera.aspect = width / height;
-        this.camera.updateProjectionMatrix();
-        this.composer.setSize(width, height);
-        this.hasValidSize = true;
+        try {
+          this.renderer.setSize(width, height);
+          this.camera.aspect = width / height;
+          this.camera.updateProjectionMatrix();
+          if (this.composer && !this.postprocessingFailed) {
+            this.composer.setSize(width, height);
+          }
+          this.hasValidSize = true;
+        } catch (e) {
+          console.warn("Resize error in Hyperspeed:", e);
+        }
       }
 
       initPasses() {
-        this.renderPass = new RenderPass(this.scene, this.camera);
-        this.bloomPass = new EffectPass(
-          this.camera,
-          new BloomEffect({
-            luminanceThreshold: 0.2,
-            luminanceSmoothing: 0,
-            resolutionScale: 1
-          })
-        );
+        if (this.postprocessingFailed || !this.composer) return;
+        try {
+          this.renderPass = new RenderPass(this.scene, this.camera);
+          this.bloomPass = new EffectPass(
+            this.camera,
+            new BloomEffect({
+              luminanceThreshold: 0.2,
+              luminanceSmoothing: 0,
+              resolutionScale: 0.5
+            })
+          );
 
-        const smaaPass = new EffectPass(
-          this.camera,
-          new SMAAEffect({
-            preset: SMAAPreset.MEDIUM,
-            searchImage: SMAAEffect.searchImageDataURL,
-            areaImage: SMAAEffect.areaImageDataURL
-          })
-        );
-        this.renderPass.renderToScreen = false;
-        this.bloomPass.renderToScreen = false;
-        smaaPass.renderToScreen = true;
-        this.composer.addPass(this.renderPass);
-        this.composer.addPass(this.bloomPass);
-        this.composer.addPass(smaaPass);
+          this.renderPass.renderToScreen = false;
+          this.bloomPass.renderToScreen = true;
+          this.composer.addPass(this.renderPass);
+          this.composer.addPass(this.bloomPass);
+        } catch (e) {
+          console.warn("Error setting up postprocessing passes:", e);
+          this.postprocessingFailed = true;
+        }
       }
 
       loadAssets() {
@@ -581,7 +591,16 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
       }
 
       render(delta) {
-        this.composer.render(delta);
+        if (this.composer && !this.postprocessingFailed) {
+          try {
+            this.composer.render(delta);
+          } catch (e) {
+            console.warn("Rendering with composer failed, falling back to direct render:", e);
+            this.postprocessingFailed = true;
+          }
+        } else {
+          this.renderer.render(this.scene, this.camera);
+        }
       }
 
       dispose() {
@@ -605,15 +624,26 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
           this.scene.clear();
         }
 
+        if (this.composer) {
+          try {
+            this.composer.dispose();
+          } catch (e) {
+            console.warn("Error disposing composer:", e);
+          }
+          this.composer = null;
+        }
+
         if (this.renderer) {
-          this.renderer.dispose();
-          this.renderer.forceContextLoss();
+          try {
+            this.renderer.dispose();
+            this.renderer.forceContextLoss();
+          } catch (e) {
+            console.warn("Error disposing renderer:", e);
+          }
           if (this.renderer.domElement && this.renderer.domElement.parentNode) {
             this.renderer.domElement.parentNode.removeChild(this.renderer.domElement);
           }
-        }
-        if (this.composer) {
-          this.composer.dispose();
+          this.renderer = null;
         }
 
         window.removeEventListener('resize', this.onWindowResize);
@@ -634,7 +664,13 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
           this.hasValidSize = false;
           return;
         }
-        this.composer.setSize(width, height, updateStyles);
+        if (this.composer && !this.postprocessingFailed) {
+          try {
+            this.composer.setSize(width, height, updateStyles);
+          } catch (e) {
+            console.warn("Composer setSize failed:", e);
+          }
+        }
         this.hasValidSize = true;
       }
 
@@ -648,19 +684,17 @@ const Hyperspeed = ({ effectOptions = DEFAULT_EFFECT_OPTIONS }) => {
             this.renderer.setSize(w, h, false);
             this.camera.aspect = w / h;
             this.camera.updateProjectionMatrix();
-            this.composer.setSize(w, h);
+            if (this.composer && !this.postprocessingFailed) {
+              try {
+                this.composer.setSize(w, h);
+              } catch (e) {
+                console.warn("Composer setSize failed in tick:", e);
+              }
+            }
             this.hasValidSize = true;
           } else {
             requestAnimationFrame(this.tick);
             return;
-          }
-        }
-
-        if (resizeRendererToDisplaySize(this.renderer, this.setSize)) {
-          const canvas = this.renderer.domElement;
-          if (this.hasValidSize) {
-            this.camera.aspect = canvas.clientWidth / canvas.clientHeight;
-            this.camera.updateProjectionMatrix();
           }
         }
 
