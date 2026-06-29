@@ -131,13 +131,7 @@ export default function HomePage() {
                 <button
                   onClick={(e) => {
                     e.preventDefault();
-                    const link = document.createElement('a');
-                    link.href = '/resume.pdf';
-                    link.target = '_blank';
-                    link.download = 'Ram_Lokesh_Resume.pdf';
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+                    window.open('/resume.pdf', '_blank');
                   }}
                   className="text-white/60 hover:text-[var(--color-red)] transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_8px_rgba(255,16,42,0.6)] cursor-pointer"
                   aria-label="Resume"
