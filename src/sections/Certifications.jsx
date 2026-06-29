@@ -64,7 +64,7 @@ export default function Certifications() {
       certificates: [
         {
           title: 'Microsoft Certified: Azure Administrator Associate',
-          date: '2026',
+          date: "Jun'26",
           verifyId: '931C28C5AE64EB9A',
           verifyUrl: 'https://learn.microsoft.com/api/credentials/share/en-in/KarriPhaneendraRamLokesh-3916/931C28C5AE64EB9A?sharingId=85BDC3F72463BB58',
           image: '/images/microsoft-certificate.png',
@@ -79,7 +79,7 @@ export default function Certifications() {
       certificates: [
         {
           title: 'Oracle Cloud Infrastructure 2025 Certified Foundations Associate',
-          date: '2026',
+          date: "Mar'26",
           verifyId: '103440761OCI25FNDCFA',
           verifyUrl: 'https://catalog-education.oracle.com/pls/certview/sharebadge?id=7912ADD0889956428E4AF62D9FC6CE015AAA808DB40BD79734E3CF1B088DF029',
           image: '/images/oracle-foundations-certificate.png',
@@ -87,7 +87,7 @@ export default function Certifications() {
         },
         {
           title: 'Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate',
-          date: '2026',
+          date: "Mar'26",
           verifyId: '103440761OCI25AICFA',
           verifyUrl: 'https://catalog-education.oracle.com/pls/certview/sharebadge?id=964782A83E3E208B41B1173ABD3ED0AA7C2915E69925135BACB9357487747F72',
           image: '/images/oracle-ai-certificate.png',
@@ -95,7 +95,7 @@ export default function Certifications() {
         },
         {
           title: 'Oracle Data Platform 2025 Certified Foundations Associate',
-          date: '2026',
+          date: "Mar'26",
           verifyId: '103440761OCI25DCFA',
           verifyUrl: 'https://catalog-education.oracle.com/pls/certview/sharebadge?id=FA0B6C5A550EDF11857C67D88B963C70C3D80E90848E84D1987D7F6213D5475E',
           image: '/images/oracle-data-platform-certificate.png',
@@ -110,7 +110,7 @@ export default function Certifications() {
       certificates: [
         {
           title: 'MongoDB Associate',
-          date: '2026',
+          date: "Jan'26",
           verifyId: 'MDB-AD-99120',
           verifyUrl: 'https://university.mongodb.com/',
           desc: 'Document modeling, index optimizations, aggregation frameworks, and cluster replication setup.'
@@ -124,7 +124,7 @@ export default function Certifications() {
       certificates: [
         {
           title: 'GitHub Foundations',
-          date: '2026',
+          date: "Feb'26",
           verifyId: 'GH-FND-88402',
           verifyUrl: 'https://github.com/ramlokesh05',
           desc: 'Branch protection rules, GitHub Actions pipeline design, repository governance, and secure release tagging.'
@@ -137,16 +137,16 @@ export default function Certifications() {
       issuer: 'Cipher Schools',
       certificates: [
         {
-          title: 'DSA with C++',
-          date: '2025',
+          title: 'Data Structures and Algorithms',
+          date: "Aug'25",
           verifyId: 'CSW2025-13429',
           verifyUrl: 'https://www.cipherschools.com/certificate/preview?id=68921d7dcec61f8eee566987',
           image: '/images/dsa-certificate.png',
           desc: 'Advanced data structures, graph search algorithms, dynamic programming, and complexity mapping in C++.'
         },
         {
-          title: 'Git and Github',
-          date: '2025',
+          title: 'Git and GitHub',
+          date: "Jun'25",
           verifyId: 'CSW2025-11405',
           verifyUrl: 'https://www.cipherschools.com/certificate/preview?id=684b03194f9ff73e6af313af',
           image: '/images/cipher-git-certificate.png',
@@ -161,7 +161,7 @@ export default function Certifications() {
       certificates: [
         {
           title: 'Social Networks',
-          date: '2025',
+          date: "Oct'25",
           verifyId: 'NPTEL25CS65S647501090',
           verifyUrl: '/images/nptel-certificate.png',
           image: '/images/nptel-certificate.png',

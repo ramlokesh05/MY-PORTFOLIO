@@ -12,7 +12,7 @@ export default function Skills() {
       id: 'programming',
       title: 'Languages I Copy-Paste From StackOverflow',
       subtitle: 'Code I Write That (Mostly) Compiles',
-      skills: ['C++', 'Java', 'Python', 'DSA', 'HTML & CSS', 'React.js', 'Node.js', 'Express.js', 'MERN Stack', 'Spring Boot', 'Django']
+      skills: ['C', 'C++', 'Java', 'Python', 'DSA', 'HTML & CSS', 'React.js', 'Node.js', 'Express.js', 'MERN Stack']
     },
     {
       id: 'technologies',
@@ -26,18 +26,24 @@ export default function Skills() {
       subtitle: 'Infrastructure and Deployment Pipelines',
       skills: [
         'AWS (EC2, S3, RDS, VPC, IAM)', 
+        'Azure',
+        'GCP',
         'Docker', 
         'Kubernetes (EKS)', 
         'Terraform (IaC)', 
         'Ansible', 
         'Jenkins', 
-        'GitHub Actions / GitLab CI', 
-        'ArgoCD (GitOps)', 
+        'Git & GitHub', 
         'Prometheus & Grafana', 
         'ELK Stack', 
-        'Linux / Bash Scripting', 
-        'Nginx / Web Servers'
+        'Linux / Bash Scripting'
       ]
+    },
+    {
+      id: 'softskills',
+      title: 'Human Compatibility Protocols',
+      subtitle: 'Non-Technical Executive Functions',
+      skills: ['Problem-Solving', 'Time Management', 'Leadership Abilities', 'Adaptability']
     }
   ]
 

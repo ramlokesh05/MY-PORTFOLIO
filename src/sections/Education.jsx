@@ -4,37 +4,37 @@ import TextType from '../components/TextType'
 
 const educationDetails = [
   {
-    year: "2021",
-    degree: "Secondary Education (10th)",
+    year: "Mar'20 — Mar'21",
+    degree: "Matriculation (10th)",
     major: "General Academics",
-    institution: "Ashram Public School, Kakinada",
-    gpa: "8.0 CGPA",
+    institution: "Ashram Public School, Nagamalli Thota Jn., Kakinada",
+    gpa: "80%",
     highlights: [
-      "Graduated with strong academic standing",
+      "Graduated with strong academic standing (80% score)",
       "Solidified foundational logic and mathematical abilities"
     ]
   },
   {
-    year: "2021 — 2023",
-    degree: "Higher Secondary Education (12th)",
-    major: "Science Stream",
-    institution: "Aditya Jr College, Kakinada",
-    gpa: "7.0 GPA",
+    year: "May'21 — May'23",
+    degree: "Intermediate (12th)",
+    major: "MPC (Mathematics, Physics, Chemistry)",
+    institution: "Aditya Junior College, Srinagar, Kakinada",
+    gpa: "69%",
     highlights: [
       "Core focus on Mathematics, Physics, and Chemistry",
       "Developed strong analytical and problem-solving skills"
     ]
   },
   {
-    year: "Expected 2027",
+    year: "Aug'23 — Present",
     degree: "Bachelor of Technology",
     major: "Computer Science & Engineering",
-    institution: "Lovely Professional University, Phagwara",
-    gpa: "6.6 / 10",
+    institution: "Lovely Professional University, Phagwara, Punjab",
+    gpa: "6.6 CGPA",
     highlights: [
       "Pursuing comprehensive B.Tech coursework",
       "Specializing in Cloud Computing & DevOps principles",
-      "Building scalable infrastructure projects"
+      "Building scalable infrastructure and AI projects"
     ]
   }
 ];
@@ -118,7 +118,7 @@ export default function Education() {
                     className={`mt-2 font-mono text-[9px] md:text-[10px] tracking-wider uppercase transition-colors duration-300 ${isActive ? 'text-[var(--color-red)] font-bold' : 'text-white/60'
                       }`}
                   >
-                    {edu.year.includes('Expected') ? '2027' : edu.year.includes('Completed') ? '2021' : edu.year.split(' — ')[1] || edu.year}
+                    {idx === 0 ? '2021' : idx === 1 ? '2023' : '2027'}
                   </span>
                 </button>
               );
